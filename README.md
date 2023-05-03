@@ -1,53 +1,46 @@
-# JamSessions Website
+# Getting Started with Create React App
 
-- [Project summary](#project-summary)
-- [Technology implementation](#technology-implementation)
-- [Project Development Roadmap](#project-development-roadmap)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-JamSessions will be created using a frontend and a backend, and is a full stack application written in typescript/javascript.
+## Available Scripts
 
-- [FrontEnd](https://github.com/batigokovali/jamsessions-frontend)
-- [BackEnd](https://github.com/batigokovali/jamsessions-backend)
+In the project directory, you can run:
 
-### Short Description
+### `npm start`
 
-A website for local musicians to find a band, according to their music preferences such as blues, rock, punk etc. The users can also list their used music equipments for sale as well.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Technology implementation
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### Front End
+### `npm test`
 
-- Typescript/Javascript
-- React
-- Bootstrap 5
-- Socket.io
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Back End
+### `npm run build`
 
-- Typescript/Javascript
-- Node.js
-- Express
-- MongoDB
-- Socket.io
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Project development roadmap
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### Desired Features
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- Login System
-  - Register/Login with JWT, or Google Account
-- Account Creation
-  - The users can select which instruments and genre they prefer.
-  - The users can add a profile photo.
-- Jam Session Listing
-  - The users can start a post for their jam session. They must provide a location, genre of music for the post. Location will be handled by Google Maps API
-  - Other users can message the author of jam session post owner, for chatting and information.
-  - After required group members are decided, they can decide on jam session place. All the info will be e-mailed to users in that post.
-  - Users in the post can upload short sound recordings of their performance, to give some idea in the others. 
-- Marketplace for secondhand instruments
+### `npm run eject`
 
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-## Author
-### Batı Gökovalı
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-- [Github](https://github.com/batigokovali)
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
