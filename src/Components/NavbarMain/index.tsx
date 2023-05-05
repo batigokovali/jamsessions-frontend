@@ -5,7 +5,7 @@ import Button from "@mui/joy/Button/Button";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
 
-export const MyNavbar = () => {
+export const NavbarMain = () => {
   return (
     <>
       <Navbar id={styles.mainnavbar} expand="lg">
@@ -14,25 +14,24 @@ export const MyNavbar = () => {
             <Link to="/home" className="me-3">
               Home
             </Link>
-            <Link to="/home">My Sessions</Link>
+            <Link to="/my-sessions">My Sessions</Link>
           </div>
           <div className="d-flex align-items-center me-5">
-            <Button className="me-3">Create A Session</Button>
-            <p className="mb-0 me-3">Profile</p>
-            <img
-              src="https://siber.boun.edu.tr/sites/cyber.boun.edu.tr/files/sample6.jpg"
-              alt=""
-              className={styles.image}
-            />
+            <Link to="/create-a-session">
+              <Button className="me-3">Create A Session</Button>
+            </Link>
+
+            <Link to="/profile">
+              <p className="mb-0 me-3">Profile</p>
+            </Link>
+            <Link to="/edit-profile">
+              <img
+                src="https://siber.boun.edu.tr/sites/cyber.boun.edu.tr/files/sample6.jpg"
+                alt=""
+                className={styles.image}
+              />
+            </Link>
           </div>
-        </Container>
-      </Navbar>
-      <Navbar id={styles.secondnavbar} expand="lg">
-        <Container className="d-flex">
-          <Link to="/home" className="me-3">
-            Role: All
-          </Link>
-          <Link to="/home">Genre: Hard Rock</Link>
         </Container>
       </Navbar>
     </>
