@@ -6,27 +6,51 @@ import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
+import { MultiSelect } from "react-multi-select-component";
+import { toast } from "react-toastify";
 
 export const LoginRegister = ({ isLogin }: props) => {
-  const [formData, setFormData] = useState({});
-  const [isError, setError] = useState({ is: false, message: "" });
+  //Page Navigation
   const navigate = useNavigate();
+
+  //Geolocation
   const [currentLocation, setLocation] = useState<any>({});
   const [isData, setData] = useState(false);
-
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
   });
 
-  useEffect(() => {
-    getLocation();
-  }, []);
+  //Toastify
+  const [error, setError] = useState("");
 
+  //Register
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState([]);
+
+  //Multiselect Options
+  const options = [
+    { label: "Guitarist", value: "guitarist" },
+    { label: "Singer", value: "singer" },
+    { label: "Drummer", value: "drummer" },
+    { label: "Bassist", value: "bassist" },
+    { label: "Tech", value: "tech" },
+    { label: "Keys", value: "keys" },
+    { label: "Drummer", value: "drummer" },
+  ];
+
+  //Multiselect selected
+  const [selected, setSelected] = useState<any[]>([]);
+
+  //Role array for POST, array of strings ["guitarist","singer"]
+  let roleArray: any = [];
+
+  //For Getting the location
   const getLocation = async () => {
     try {
       const location = await axios.get("https://ipapi.co/json");
@@ -37,20 +61,55 @@ export const LoginRegister = ({ isLogin }: props) => {
     }
   };
 
-  console.log(currentLocation);
-
-  const center = useMemo(
-    () => ({
-      lat: currentLocation?.latitude,
-      lng: currentLocation?.longitude,
-    }),
-    []
-  );
-
-  const center2 = {
+  const center = {
     lat: currentLocation?.latitude,
     lng: currentLocation?.longitude,
   };
+
+  const handleSubmit = async (e: FormEvent) => {
+    try {
+      e.preventDefault();
+      selected.forEach((el) => roleArray.push(el.value));
+      const { data } = await axios.post(
+        (process.env.REACT_APP_API_URL as string) + "/users/register",
+        {
+          username,
+          email,
+          password,
+          role: roleArray,
+        }
+      );
+      toast("Register successful! 💪", { autoClose: 1000 });
+      localStorage.setItem("accessToken", data.accessToken);
+      roleArray = [];
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleLogin = async (e: FormEvent) => {
+    try {
+      e.preventDefault();
+      const { data } = await axios.post(
+        (process.env.REACT_APP_API_URL as string) + "/users/login",
+        {
+          email,
+          password,
+        }
+      );
+      toast("Register successful! 💪", { autoClose: 1000 });
+      localStorage.setItem("accessToken", data.accessToken);
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    document.title = "Jamsessions | Register";
+    getLocation();
+  }, []);
 
   return (
     <Container
@@ -76,22 +135,28 @@ export const LoginRegister = ({ isLogin }: props) => {
               className={cx(styles.input)}
               variant="soft"
               placeholder="Username"
+              onChange={(val) => setUsername(val.currentTarget.value)}
             />
             <Input
               className={cx(styles.input, "mt-3")}
               variant="soft"
               placeholder="Email"
+              onChange={(val) => setEmail(val.currentTarget.value)}
             />
             <Input
               className={cx(styles.input, "mt-3")}
               variant="soft"
               placeholder="Password"
+              onChange={(val) => setPassword(val.currentTarget.value)}
             />
-            <Input
-              className={cx(styles.input, "mt-3")}
-              variant="soft"
-              placeholder="Role"
-            />
+            <div className={cx(styles.multiselect, "mt-3")}>
+              <MultiSelect
+                options={options}
+                value={selected}
+                onChange={setSelected}
+                labelledBy="Role"
+              />
+            </div>
             {/* {!isLoaded && (
               <> */}
             {!isData ? (
@@ -103,15 +168,21 @@ export const LoginRegister = ({ isLogin }: props) => {
             ) : (
               <GoogleMap
                 zoom={10}
-                center={center2}
+                center={center}
                 mapContainerClassName={styles.map}
               >
-                <MarkerF position={center2} />
+                <MarkerF position={center} />
               </GoogleMap>
             )}
             {/* </>
             )} */}
-            <Button className={cx(styles.button, "mt-4")}>Register</Button>
+            <Button
+              onClick={handleSubmit}
+              type="submit"
+              className={cx(styles.button, "mt-4")}
+            >
+              Register
+            </Button>
           </>
         ) : (
           <>
@@ -119,13 +190,17 @@ export const LoginRegister = ({ isLogin }: props) => {
               className={cx(styles.input)}
               variant="soft"
               placeholder="Email"
+              onChange={(val) => setEmail(val.currentTarget.value)}
             />
             <Input
               className={cx(styles.input, "mt-3")}
               variant="soft"
               placeholder="Password"
+              onChange={(val) => setPassword(val.currentTarget.value)}
             />
-            <Button className={cx(styles.button, "mt-4")}>Sign In</Button>
+            <Button className={cx(styles.button, "mt-4")} onClick={handleLogin}>
+              Sign In
+            </Button>
             <p className="mt-4">
               Don't have an account? <Link to="/register">Register Here.</Link>
             </p>
