@@ -11,6 +11,7 @@ import { SessionCreate } from "./Components/SessionCreate";
 import { MediaItem } from "./Components/MediaItem";
 import { ProfileInfo } from "./Components/ProfileInfo";
 import { EditProfile } from "./Components/EditProfile";
+import { CreateAPost } from "./Components/CreateAPost";
 
 function App() {
   return (
@@ -75,6 +76,15 @@ function App() {
             </>
           }
           path="/edit-profile"
+        />
+        <Route
+          element={
+            <>
+              <NavbarMain />
+              <CreateAPost />
+            </>
+          }
+          path="/create-a-post"
         />
         <Route
           path="*"
