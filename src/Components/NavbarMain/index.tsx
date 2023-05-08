@@ -4,8 +4,34 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "@mui/joy/Button/Button";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { IUser } from "../../Types/IUser";
 
 export const NavbarMain = () => {
+  const [user, setUser] = useState<IUser>();
+
+  const fetchUserInfo = async () => {
+    try {
+      const user = await axios.get(
+        (process.env.REACT_APP_API_URL as string) + "/users/me",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      console.log(user.data);
+      setUser(user.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
   return (
     <>
       <Navbar id={styles.mainnavbar} expand="lg">
@@ -25,11 +51,7 @@ export const NavbarMain = () => {
               <p className="mb-0 me-3">Profile</p>
             </Link>
             <Link to="/edit-profile">
-              <img
-                src="https://siber.boun.edu.tr/sites/cyber.boun.edu.tr/files/sample6.jpg"
-                alt=""
-                className={styles.image}
-              />
+              <img src={user?.avatar} alt="" className={styles.image} />
             </Link>
           </div>
         </Container>

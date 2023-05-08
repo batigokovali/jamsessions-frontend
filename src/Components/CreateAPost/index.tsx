@@ -33,7 +33,7 @@ export const CreateAPost = () => {
         }
       }
       await axios.post(
-        (process.env.REACT_APP_API_URL as string) + "/feed/media2",
+        (process.env.REACT_APP_API_URL as string) + "/feed/media",
         formData,
         {
           headers: {

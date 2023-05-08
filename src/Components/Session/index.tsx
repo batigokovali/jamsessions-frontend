@@ -1,23 +1,59 @@
 import Card from "react-bootstrap/Card";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { ISession } from "../../Types/ISession";
+import { format } from "date-fns";
 
 export const SessionCard = () => {
+  const [sessions, setSessions] = useState<ISession[]>();
+
+  const getSessions = async () => {
+    try {
+      const sessions = await axios.get(
+        (process.env.REACT_APP_API_URL as string) + "/sessions",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      console.log(sessions);
+      setSessions(sessions.data.sessions);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getSessions();
+  }, []);
+
+  console.log(sessions);
+
   return (
     <>
       <Container className="mt-5">
-        <Link to={"/session-details"}>
-          <Card style={{ width: "18rem" }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Link>
+        <Row>
+          {sessions?.map((session: ISession) => (
+            <Col sm={3} md={3} lg={3}>
+              <Card style={{ width: "18rem" }}>
+                <Link to={"/session-details"}>
+                  <Card.Body>
+                    <Card.Title>{session?.title}</Card.Title>
+                    <Card.Text>{session?.description}</Card.Text>
+                    <Card.Text>Role Needed: {session?.role}</Card.Text>
+                    <Card.Text>
+                      Date:
+                      {format(new Date(session?.date), "do 'of' MMMM',' EEEE ")}
+                    </Card.Text>
+                  </Card.Body>
+                </Link>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </Container>
     </>
   );

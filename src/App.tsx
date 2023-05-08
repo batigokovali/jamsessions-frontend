@@ -49,7 +49,7 @@ function App() {
               <SessionCard />
             </>
           }
-          path={"my-sessions"}
+          path="/my-sessions"
         />
         <Route
           element={
@@ -87,12 +87,12 @@ function App() {
           path="/create-a-post"
         />
         <Route
-          path="*"
           element={
-            <h1 className="text-center text-white mt-5 topnav-fix">
+            <h1 className="text-center text-dark mt-5 topnav-fix">
               Page Not Found :( Yet...
             </h1>
           }
+          path="*"
         />
       </Routes>
     </BrowserRouter>
