@@ -39,8 +39,6 @@ export const ProfileInfo = () => {
     getProfileInfo();
   }, []);
 
-  console.log(userData);
-
   return (
     <Container className="mt-5">
       <Row>

@@ -19,7 +19,6 @@ export const SessionCard = () => {
           },
         }
       );
-      console.log(sessions);
       setSessions(sessions.data.sessions);
     } catch (error) {
       console.log(error);
@@ -39,17 +38,20 @@ export const SessionCard = () => {
           {sessions?.map((session: ISession) => (
             <Col sm={3} md={3} lg={3}>
               <Card style={{ width: "18rem" }}>
-                <Link to={"/session-details"}>
-                  <Card.Body>
+                <Card.Body>
+                  <Link to={`/session-details/${session?._id}`}>
                     <Card.Title>{session?.title}</Card.Title>
-                    <Card.Text>{session?.description}</Card.Text>
-                    <Card.Text>Role Needed: {session?.role}</Card.Text>
-                    <Card.Text>
-                      Date:
-                      {format(new Date(session?.date), "do 'of' MMMM',' EEEE ")}
-                    </Card.Text>
-                  </Card.Body>
-                </Link>
+                  </Link>
+                  <Link to={`/profile/${session?.user._id}`}>
+                    <Card.Text>By: {session?.user.username}</Card.Text>
+                  </Link>
+                  <Card.Text>{session?.description}</Card.Text>
+                  <Card.Text>Role Needed: {session?.role}</Card.Text>
+                  <Card.Text>
+                    Date:
+                    {format(new Date(session?.date), "do 'of' MMMM',' EEEE ")}
+                  </Card.Text>
+                </Card.Body>
               </Card>
             </Col>
           ))}

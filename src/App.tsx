@@ -12,6 +12,9 @@ import { MediaItem } from "./Components/MediaItem";
 import { ProfileInfo } from "./Components/ProfileInfo";
 import { EditProfile } from "./Components/EditProfile";
 import { CreateAPost } from "./Components/CreateAPost";
+import { SavedSessions } from "./Components/SavedSessions";
+import { SessionsUser } from "./Components/SessionsUser";
+import { UserProfile } from "./Components/UserProfile";
 
 function App() {
   return (
@@ -37,16 +40,16 @@ function App() {
               <SessionDetails />
             </>
           }
-          path="/session-details"
+          path="/session-details/:sessionID"
         />
         <Route
           element={
             <>
               <NavbarMain />
               <NavbarSaved />
-              <SessionCard />
+              <SavedSessions />
               <NavbarMySessions />
-              <SessionCard />
+              <SessionsUser />
             </>
           }
           path="/my-sessions"
@@ -68,6 +71,15 @@ function App() {
             </>
           }
           path="/profile"
+        />
+        <Route
+          element={
+            <>
+              <NavbarMain />
+              <UserProfile />
+            </>
+          }
+          path="/profile/:userID"
         />
         <Route
           element={

@@ -9,4 +9,5 @@ export interface ISession {
   role: Array<string>;
   geolocation: string;
   comments: IComment[];
+  _id: string;
 }

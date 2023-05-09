@@ -7,4 +7,5 @@ export interface IUser {
   location: Location;
   role: Array<string>;
   refreshToken: string;
+  _id: string;
 }
