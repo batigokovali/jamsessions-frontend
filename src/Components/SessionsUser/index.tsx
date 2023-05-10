@@ -5,6 +5,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { ISession } from "../../Types/ISession";
 import { format } from "date-fns";
+import { BsFillTrashFill } from "react-icons/bs";
+import { FiEdit } from "react-icons/fi";
+import styles from "./styles.module.css";
+import cx from "classnames";
 
 export const SessionsUser = () => {
   const [sessions, setSessions] = useState<ISession[]>();
@@ -70,22 +74,26 @@ export const SessionsUser = () => {
             ?.filter((session) => session?.user._id === userData?._id)
             .map((session: ISession) => (
               <Col sm={3} md={3} lg={3}>
-                <Card style={{ width: "18rem" }}>
-                  <Link to={"/session-details"}>
-                    <Card.Body>
-                      <Card.Title>{session?.title}</Card.Title>
-                      <Card.Text>By: {session?.user.username}</Card.Text>
-                      <Card.Text>{session?.description}</Card.Text>
-                      <Card.Text>Role Needed: {session?.role}</Card.Text>
-                      <Card.Text>
-                        Date:
-                        {format(
-                          new Date(session?.date),
-                          "do 'of' MMMM',' EEEE "
-                        )}
-                      </Card.Text>
-                    </Card.Body>
-                  </Link>
+                <Card className={cx(styles.card, "mb-3")}>
+                  <Card.Body>
+                    <Card.Title>{session?.title}</Card.Title>
+                    <Card.Text>By: {session?.user.username}</Card.Text>
+                    <Card.Text>{session?.description}</Card.Text>
+                    <Card.Text>Role Needed: {session?.role}</Card.Text>
+                    <Card.Text>Genre: {session?.genre}</Card.Text>
+                    <Card.Text>
+                      Date:{" "}
+                      {format(new Date(session?.date), "do 'of' MMMM',' EEEE ")}
+                    </Card.Text>
+                  </Card.Body>
+                  <Row className="my-3">
+                    <Col className="d-flex justify-content-center">
+                      <BsFillTrashFill />
+                    </Col>
+                    <Col className="d-flex justify-content-center">
+                      <FiEdit />
+                    </Col>
+                  </Row>
                 </Card>
               </Col>
             ))}
