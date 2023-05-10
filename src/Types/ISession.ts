@@ -9,5 +9,6 @@ export interface ISession {
   role: Array<string>;
   geolocation: string;
   comments: IComment[];
+  genre: Array<string>;
   _id: string;
 }

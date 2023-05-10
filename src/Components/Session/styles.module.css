@@ -1,0 +1,41 @@
+.image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#mainnavbar {
+  background-color: rgb(217, 217, 217);
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+#secondnavbar {
+  background-color: rgb(167, 167, 167);
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.imageNavbar {
+  width: 80%;
+  object-fit: contain;
+}
+
+.button {
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.map {
+  width: 500px;
+  height: 300px;
+  border-radius: 15px;
+  margin-top: 16px;
+}
+
+.multiselect {
+  width: 15vw;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.filters {
+  width: 25%;
+}

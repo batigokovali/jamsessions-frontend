@@ -41,8 +41,18 @@ export const SessionCreate = () => {
     { label: "Drummer", value: "drummer" },
   ];
 
+  const options2 = [
+    { label: "Rock", value: "rock" },
+    { label: "Metal", value: "metal" },
+    { label: "Blues", value: "blues" },
+    { label: "Jazz", value: "jazz" },
+    { label: "Pop", value: "pop" },
+    { label: "Electronic", value: "electronic" },
+  ];
+
   //Multiselect selected
   const [selected, setSelected] = useState<any[]>([]);
+  const [selected2, setSelected2] = useState<any[]>([]);
 
   useEffect(() => {
     getLocation();
@@ -63,6 +73,7 @@ export const SessionCreate = () => {
 
   //Role array for POST, array of strings ["guitarist","singer"]
   let roleArray: any = [];
+  let genreArray: any = [];
 
   console.log(date);
 
@@ -70,11 +81,13 @@ export const SessionCreate = () => {
     try {
       e.preventDefault();
       selected.forEach((el) => roleArray.push(el.value));
+      selected2.forEach((el) => genreArray.push(el.value));
       const sessionData = {
         title,
         description,
         date,
         role: roleArray,
+        genre: genreArray,
       };
       await axios.post(
         (process.env.REACT_APP_API_URL as string) + "/sessions",
@@ -149,6 +162,14 @@ export const SessionCreate = () => {
               value={selected}
               onChange={setSelected}
               labelledBy="Role"
+            />
+          </div>
+          <div className={cx(styles.multiselect, "mt-3")}>
+            <MultiSelect
+              options={options2}
+              value={selected2}
+              onChange={setSelected2}
+              labelledBy="Genre"
             />
           </div>
           {!isData ? (
