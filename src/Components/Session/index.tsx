@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import styles from "./styles.module.css";
 import { Navbar } from "react-bootstrap";
 import { MultiSelect } from "react-multi-select-component";
+import { IMultiselect } from "../../Types/IMultiselect";
 import cx from "classnames";
 import Input from "@mui/joy/Input";
 
@@ -39,8 +40,8 @@ export const SessionCard = () => {
   let genreArray: any = [];
 
   //Multiselect selected
-  const [roles, setRoles] = useState<any[]>([]);
-  const [genres, setGenres] = useState<any[]>([]);
+  const [roles, setRoles] = useState<IMultiselect[]>([]);
+  const [genres, setGenres] = useState<IMultiselect[]>([]);
 
   const getSessions = async () => {
     try {
