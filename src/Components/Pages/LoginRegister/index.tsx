@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { Container } from "@mui/material";
-import logo from "../assets/jamsessions-logo/png/logo-no-background.png";
+import logo from "../../assets/jamsessions-logo/png/logo-no-background.png";
 import styles from "./styles.module.css";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";

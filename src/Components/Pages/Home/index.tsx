@@ -1,18 +1,19 @@
 import Card from "react-bootstrap/Card";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { ISession } from "../../Types/ISession";
+import { ISession } from "../../../Types/ISession";
 import { format } from "date-fns";
 import styles from "./styles.module.css";
-import { Navbar } from "react-bootstrap";
 import { MultiSelect } from "react-multi-select-component";
-import { IMultiselect } from "../../Types/IMultiselect";
+import { IMultiselect } from "../../../Types/IMultiselect";
 import cx from "classnames";
 import Input from "@mui/joy/Input";
+import { SessionsCard } from "../../Reusables/SessionsCard";
+import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
 
-export const SessionCard = () => {
+export const Home = () => {
   const [sessions, setSessions] = useState<ISession[]>();
   const [distance, setDistance] = useState("");
 
@@ -74,6 +75,7 @@ export const SessionCard = () => {
 
   return (
     <>
+      <NavbarMain />
       <Navbar id={styles.secondnavbar} expand="lg">
         <Container className="d-flex">
           <div className="d-flex align-items-center">
@@ -106,31 +108,7 @@ export const SessionCard = () => {
           />
         </Container>
       </Navbar>
-      <Container className="mt-5">
-        <Row>
-          {sessions?.map((session: ISession) => (
-            <Col sm={3} md={3} lg={3}>
-              <Card>
-                <Card.Body>
-                  <Link to={`/session-details/${session?._id}`}>
-                    <Card.Title>{session?.title}</Card.Title>
-                  </Link>
-                  <Link to={`/profile/${session?.user._id}`}>
-                    <Card.Text>By: {session?.user.username}</Card.Text>
-                  </Link>
-                  <Card.Text>{session?.description}</Card.Text>
-                  <Card.Text>Genre: {session?.genre}</Card.Text>
-                  <Card.Text>Role Needed: {session?.role}</Card.Text>
-                  <Card.Text>
-                    Date:
-                    {format(new Date(session?.date), "do 'of' MMMM',' EEEE ")}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
+      <SessionsCard sessions={sessions as ISession[]} state={false} />
     </>
   );
 };

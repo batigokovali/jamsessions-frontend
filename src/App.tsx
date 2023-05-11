@@ -1,20 +1,15 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginRegister } from "./Components/LoginRegister";
-import { NavbarMain } from "./Components/NavbarMain";
-import { SessionCard } from "./Components/Session";
-import { NavbarSecond } from "./Components/NavbarSecond";
-import { SessionDetails } from "./Components/SessionDetails";
-import { NavbarSaved } from "./Components/NavbarSaved";
-import { NavbarMySessions } from "./Components/NavbarMySessions";
-import { SessionCreate } from "./Components/SessionCreate";
-import { MediaItem } from "./Components/MediaItem";
-import { ProfileInfo } from "./Components/ProfileInfo";
-import { EditProfile } from "./Components/EditProfile";
-import { CreateAPost } from "./Components/CreateAPost";
-import { SavedSessions } from "./Components/SavedSessions";
-import { SessionsUser } from "./Components/SessionsUser";
-import { UserProfile } from "./Components/UserProfile";
+import { LoginRegister } from "./Components/Pages/LoginRegister";
+import { NavbarMain } from "./Components/Reusables/Navbars/NavbarMain";
+import { Home } from "./Components/Pages/Home";
+import { SessionDetails } from "./Components/Pages/SessionDetails";
+import { CreateASession } from "./Components/Pages/CreateASession";
+import { MediaItem } from "./Components/Reusables/MediaItem";
+import { UserProfile } from "./Components/Pages/Profile";
+import { EditProfile } from "./Components/Pages/EditProfile";
+import { CreateAPost } from "./Components/Pages/CreateAPost";
+import { MySessions } from "./Components/Pages/MySessions";
 
 function App() {
   return (
@@ -25,9 +20,7 @@ function App() {
         <Route
           element={
             <>
-              <NavbarMain />
-              <NavbarSecond />
-              <SessionCard />
+              <Home />
             </>
           }
           path="/home"
@@ -35,8 +28,6 @@ function App() {
         <Route
           element={
             <>
-              <NavbarMain />
-              <NavbarSecond />
               <SessionDetails />
             </>
           }
@@ -45,11 +36,7 @@ function App() {
         <Route
           element={
             <>
-              <NavbarMain />
-              <NavbarSaved />
-              <SavedSessions />
-              <NavbarMySessions />
-              <SessionsUser />
+              <MySessions />
             </>
           }
           path="/my-sessions"
@@ -57,7 +44,7 @@ function App() {
         <Route
           element={
             <>
-              <NavbarMain /> <SessionCreate />
+              <CreateASession />
             </>
           }
           path="/create-a-session"
@@ -65,9 +52,7 @@ function App() {
         <Route
           element={
             <>
-              <NavbarMain />
-              <ProfileInfo />
-              <MediaItem />
+              <UserProfile state={true} />
             </>
           }
           path="/profile"
@@ -75,8 +60,7 @@ function App() {
         <Route
           element={
             <>
-              <NavbarMain />
-              <UserProfile />
+              <UserProfile state={false} />
             </>
           }
           path="/profile/:userID"

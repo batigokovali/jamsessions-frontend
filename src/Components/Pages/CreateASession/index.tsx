@@ -11,8 +11,9 @@ import { useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
 import { MultiSelect } from "react-multi-select-component";
+import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
 
-export const SessionCreate = () => {
+export const CreateASession = () => {
   //Page Navigation
   const navigate = useNavigate();
 
@@ -127,73 +128,79 @@ export const SessionCreate = () => {
   };
 
   return (
-    <Container>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <>
-          <Input
-            className={cx(styles.input)}
-            variant="soft"
-            placeholder="Title"
-            onChange={(val) => setTitle(val.currentTarget.value)}
-          />
-          <Input
-            className={cx(styles.input, "mt-3")}
-            variant="soft"
-            placeholder="Description"
-            onChange={(val) => setDescription(val.currentTarget.value)}
-          />
-          <Input
-            className={cx(styles.input, "mt-3")}
-            variant="soft"
-            placeholder="date"
-            type="date"
-            onChange={(val) => setDate(val.currentTarget.value)}
-          />
-          <div className={cx(styles.multiselect, "mt-3")}>
-            <MultiSelect
-              options={options}
-              value={selected}
-              onChange={setSelected}
-              labelledBy="Role"
+    <>
+      <NavbarMain />
+      <Container>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <>
+            <Input
+              className={cx(styles.input)}
+              variant="soft"
+              placeholder="Title"
+              onChange={(val) => setTitle(val.currentTarget.value)}
             />
-          </div>
-          <div className={cx(styles.multiselect, "mt-3")}>
-            <MultiSelect
-              options={options2}
-              value={selected2}
-              onChange={setSelected2}
-              labelledBy="Genre"
+            <Input
+              className={cx(styles.input, "mt-3")}
+              variant="soft"
+              placeholder="Description"
+              onChange={(val) => setDescription(val.currentTarget.value)}
             />
-          </div>
-          {!isData ? (
-            <>
-              <Box>
-                <p>Loading...</p>
-              </Box>
-            </>
-          ) : (
-            <GoogleMap
-              zoom={10}
-              center={center2}
-              mapContainerClassName={styles.map}
-            >
-              <MarkerF position={center2} />
-            </GoogleMap>
-          )}
+            <Input
+              className={cx(styles.input, "mt-3")}
+              variant="soft"
+              placeholder="date"
+              type="date"
+              onChange={(val) => setDate(val.currentTarget.value)}
+            />
+            <div className={cx(styles.multiselect, "mt-3")}>
+              <MultiSelect
+                options={options}
+                value={selected}
+                onChange={setSelected}
+                labelledBy="Role"
+              />
+            </div>
+            <div className={cx(styles.multiselect, "mt-3")}>
+              <MultiSelect
+                options={options2}
+                value={selected2}
+                onChange={setSelected2}
+                labelledBy="Genre"
+              />
+            </div>
+            {!isData ? (
+              <>
+                <Box>
+                  <p>Loading...</p>
+                </Box>
+              </>
+            ) : (
+              <GoogleMap
+                zoom={10}
+                center={center2}
+                mapContainerClassName={styles.map}
+              >
+                <MarkerF position={center2} />
+              </GoogleMap>
+            )}
 
-          <Button className={cx(styles.button, "mt-4")} onClick={handleSubmit}>
-            Create A Session
-          </Button>
-        </>
-      </Box>
-    </Container>
+            <Button
+              className={cx(styles.button, "mt-4")}
+              onClick={handleSubmit}
+            >
+              Create A Session
+            </Button>
+          </>
+        </Box>
+      </Container>
+    </>
   );
 };
 

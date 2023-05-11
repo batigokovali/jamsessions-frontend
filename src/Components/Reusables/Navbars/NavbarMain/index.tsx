@@ -1,19 +1,18 @@
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "@mui/joy/Button/Button";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { IUser } from "../../Types/IUser";
+import { IUser } from "../../../../Types/IUser";
 
 export const NavbarMain = () => {
   const [user, setUser] = useState<IUser>();
 
   const fetchUserInfo = async () => {
     try {
-      const user = await axios.get(
+      const { data } = await axios.get(
         (process.env.REACT_APP_API_URL as string) + "/users/me",
         {
           headers: {
@@ -21,8 +20,7 @@ export const NavbarMain = () => {
           },
         }
       );
-      console.log(user.data);
-      setUser(user.data);
+      setUser(data.user);
     } catch (error) {
       console.log(error);
     }

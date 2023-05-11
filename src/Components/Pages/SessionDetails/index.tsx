@@ -3,7 +3,8 @@ import { Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ISession } from "../../Types/ISession";
+import { ISession } from "../../../Types/ISession";
+import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
 
 export const SessionDetails = () => {
   const { sessionID } = useParams();
@@ -32,11 +33,14 @@ export const SessionDetails = () => {
 
   console.log(session);
   return (
-    <Container className="mt-5">
-      <Card.Title>{session?.title}</Card.Title>
-      <Card.Text>{session?.user.username}</Card.Text>
-      <Card.Text>{session?.description}</Card.Text>
-      <Card.Text>{session?.role}</Card.Text>
-    </Container>
+    <>
+      <NavbarMain />
+      <Container className="mt-5">
+        <Card.Title>{session?.title}</Card.Title>
+        <Card.Text>{session?.user.username}</Card.Text>
+        <Card.Text>{session?.description}</Card.Text>
+        <Card.Text>{session?.role}</Card.Text>
+      </Container>
+    </>
   );
 };
