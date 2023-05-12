@@ -12,10 +12,12 @@ import cx from "classnames";
 import Input from "@mui/joy/Input";
 import { SessionsCard } from "../../Reusables/SessionsCard";
 import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
+import { IUser } from "../../../Types/IUser";
 
 export const Home = () => {
   const [sessions, setSessions] = useState<ISession[]>();
   const [distance, setDistance] = useState("");
+  const [user, setUser] = useState<IUser>();
 
   //Multiselect Options
   const options = [
@@ -69,8 +71,25 @@ export const Home = () => {
     }
   };
 
+  const getProfileInfo = async () => {
+    try {
+      const { data } = await axios.get(
+        (process.env.REACT_APP_API_URL as string) + "/users/me",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      setUser(data.user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getSessions();
+    getProfileInfo();
   }, [roles, genres]);
 
   return (
@@ -108,7 +127,13 @@ export const Home = () => {
           />
         </Container>
       </Navbar>
-      <SessionsCard sessions={sessions as ISession[]} state={false} />
+      <SessionsCard
+        sessions={sessions as ISession[]}
+        user={user as IUser}
+        state={false}
+        state2={true}
+        fetch={getProfileInfo}
+      />
     </>
   );
 };

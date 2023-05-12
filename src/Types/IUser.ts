@@ -1,9 +1,11 @@
+import { ISession } from "./ISession";
+
 export interface IUser {
   username: string;
   email: string;
   avatar: string;
-  savedsessions: Array<string>;
-  createdsessions: Array<string>;
+  savedSessions: ISession[];
+  createdSessions: ISession[];
   location: Location;
   role: Array<string>;
   refreshToken: string;
