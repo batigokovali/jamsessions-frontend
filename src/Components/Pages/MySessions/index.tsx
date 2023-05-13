@@ -33,6 +33,8 @@ export const MySessions = () => {
     getProfileInfo();
   }, []);
 
+  console.log(createdSessions);
+
   return (
     <>
       <NavbarMain />

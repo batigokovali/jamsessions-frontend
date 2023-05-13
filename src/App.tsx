@@ -5,11 +5,11 @@ import { NavbarMain } from "./Components/Reusables/Navbars/NavbarMain";
 import { Home } from "./Components/Pages/Home";
 import { SessionDetails } from "./Components/Pages/SessionDetails";
 import { CreateASession } from "./Components/Pages/CreateASession";
-import { MediaItem } from "./Components/Reusables/MediaItem";
 import { UserProfile } from "./Components/Pages/Profile";
 import { EditProfile } from "./Components/Pages/EditProfile";
 import { CreateAPost } from "./Components/Pages/CreateAPost";
 import { MySessions } from "./Components/Pages/MySessions";
+import { EditASession } from "./Components/Pages/EditSession";
 
 function App() {
   return (
@@ -49,6 +49,7 @@ function App() {
           }
           path="/create-a-session"
         />
+        <Route element={<EditASession />} path="/edit-a-session/:sessionID" />
         <Route
           element={
             <>

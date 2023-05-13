@@ -7,10 +7,11 @@ import { format } from "date-fns";
 import { FiEdit } from "react-icons/fi";
 import styles from "./styles.module.css";
 import cx from "classnames";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/joy/Button/Button";
 import { useState } from "react";
+import { EditSessionModal } from "../Modals/EditSession";
 
 interface props {
   sessions: ISession[];
@@ -27,6 +28,8 @@ export const SessionsCard = ({
   state2,
   fetch,
 }: props) => {
+  const navigate = useNavigate();
+
   const saveSession = async (sessionID: string) => {
     try {
       const { data } = await axios.post(
@@ -44,7 +47,24 @@ export const SessionsCard = ({
     }
   };
 
+  const deleteSession = async (sessionID: string) => {
+    try {
+      const { data } = await axios.delete(
+        (process.env.REACT_APP_API_URL as string) + `/sessions/${sessionID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      fetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   console.log(user);
+  console.log(sessions);
 
   return (
     <>
@@ -72,10 +92,16 @@ export const SessionsCard = ({
                 {state ? (
                   <Row className="my-3">
                     <Col className="d-flex justify-content-center">
-                      <BsFillTrashFill />
+                      <BsFillTrashFill
+                        onClick={() => deleteSession(session._id)}
+                      />
                     </Col>
                     <Col className="d-flex justify-content-center">
-                      <FiEdit />
+                      <FiEdit
+                        onClick={() =>
+                          navigate(`/edit-a-session/${session._id}`)
+                        }
+                      />
                     </Col>
                   </Row>
                 ) : (
@@ -97,6 +123,7 @@ export const SessionsCard = ({
                           <>
                             <Button
                               className="mx-3"
+                              color="danger"
                               onClick={() => saveSession(session._id)}
                             >
                               Delete Session

@@ -92,6 +92,8 @@ export const Home = () => {
     getProfileInfo();
   }, [roles, genres]);
 
+  console.log(sessions);
+
   return (
     <>
       <NavbarMain />

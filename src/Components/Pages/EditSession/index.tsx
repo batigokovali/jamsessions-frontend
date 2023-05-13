@@ -6,16 +6,19 @@ import Button from "@mui/joy/Button";
 import cx from "classnames";
 import { toast } from "react-toastify";
 import { FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
 import { MultiSelect } from "react-multi-select-component";
 import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
+import { ISession } from "../../../Types/ISession";
 
-export const CreateASession = () => {
-  //Page Navigation
-  const navigate = useNavigate();
+export const EditASession = () => {
+  const navigate = useNavigate(); //Page Navigation
+
+  const { sessionID } = useParams(); //Extracting session ID from URL
+  console.log(sessionID);
 
   //Geolocation
   const [formData, setFormData] = useState({});
@@ -26,10 +29,13 @@ export const CreateASession = () => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
   });
 
-  //Create A Session
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+  //Get old session data
+  const [sessionData, setSessionData] = useState<ISession>();
+
+  //Edit A Session
+  const [title, setTitle] = useState(sessionData?.title);
+  const [description, setDescription] = useState(sessionData?.description);
+  const [date, setDate] = useState(sessionData?.date.toString());
 
   //Multiselect Options
   const options = [
@@ -76,21 +82,68 @@ export const CreateASession = () => {
   let roleArray: any = [];
   let genreArray: any = [];
 
+  console.log(date);
+
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
       selected.forEach((el) => roleArray.push(el.value));
       selected2.forEach((el) => genreArray.push(el.value));
-      const sessionData = {
-        title,
-        description,
-        date,
-        role: roleArray,
-        genre: genreArray,
-      };
-      await axios.post(
-        (process.env.REACT_APP_API_URL as string) + "/sessions",
-        sessionData,
+      if (roleArray.length === 0 && genreArray.length === 0) {
+        const editedSessionData = {
+          title,
+          description,
+          date,
+          role: sessionData?.role,
+          genre: sessionData?.genre,
+        };
+        await axios.put(
+          (process.env.REACT_APP_API_URL as string) + `/sessions/${sessionID}`,
+          editedSessionData,
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        toast("Editing session successful! 💪", { autoClose: 1000 });
+        roleArray = [];
+        genreArray = [];
+        navigate("/my-sessions");
+      } else {
+        const editedSessionData = {
+          title,
+          description,
+          date,
+          role: roleArray,
+          genre: genreArray,
+        };
+
+        await axios.put(
+          (process.env.REACT_APP_API_URL as string) + `/sessions/${sessionID}`,
+          editedSessionData,
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        toast("Editing session successful! 💪", { autoClose: 1000 });
+        roleArray = [];
+        genreArray = [];
+        navigate("/my-sessions");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchSession = async () => {
+    try {
+      const { data } = await axios.get(
+        (process.env.REACT_APP_API_URL as string) + `/sessions/${sessionID}`,
         {
           headers: {
             "Content-type": "application/json",
@@ -98,23 +151,24 @@ export const CreateASession = () => {
           },
         }
       );
-      toast("Creating session successful! 💪", { autoClose: 1000 });
-      roleArray = [];
-      genreArray = [];
-      navigate("/home");
+      setSessionData(data[0]);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    document.title = "Jamsessions | Edit A Session";
+    fetchSession();
   }, []);
+
+  console.log(sessionData);
 
   const center2 = {
     lat: currentLocation?.latitude,
     lng: currentLocation?.longitude,
   };
+
+  console.log(sessionData?.title);
 
   return (
     <>
@@ -139,6 +193,7 @@ export const CreateASession = () => {
               className={cx(styles.input, "mt-3")}
               variant="soft"
               placeholder="Description"
+              defaultValue={sessionData?.description}
               onChange={(val) => setDescription(val.currentTarget.value)}
             />
             <Input
@@ -184,7 +239,7 @@ export const CreateASession = () => {
               className={cx(styles.button, "mt-4")}
               onClick={handleSubmit}
             >
-              Create A Session
+              Edit Session
             </Button>
           </>
         </Box>
