@@ -6,12 +6,14 @@ import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
 import { Link } from "react-router-dom";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
 import { MultiSelect } from "react-multi-select-component";
 import { toast } from "react-toastify";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
+import e from "express";
 
 export const LoginRegister = ({ isLogin }: props) => {
   //Page Navigation
@@ -20,9 +22,29 @@ export const LoginRegister = ({ isLogin }: props) => {
   //Geolocation
   const [currentLocation, setLocation] = useState<any>({});
   const [isData, setData] = useState(false);
+  const [latAuto, setLat] = useState();
+  const [lngAuto, setLng] = useState();
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
+    libraries: ["places"],
   });
+
+  const inputRef = useRef<any>();
+
+  const handlePlaceChanged = () => {
+    const places = inputRef?.current?.getPlaces();
+    if (places && places.length > 0) {
+      const place = places[0];
+      if (place.geometry?.location) {
+        setLat(place.geometry.location.lat());
+        setLng(place.geometry.location.lng());
+      } else {
+        console.error("Invalid place object:", place);
+      }
+    } else {
+      console.error("No places found.");
+    }
+  };
 
   //Toastify
   const [error, setError] = useState("");
@@ -61,9 +83,11 @@ export const LoginRegister = ({ isLogin }: props) => {
     }
   };
 
+  console.log(latAuto, lngAuto);
+
   const center = {
-    lat: currentLocation?.latitude,
-    lng: currentLocation?.longitude,
+    lat: latAuto!,
+    lng: lngAuto!,
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -77,6 +101,7 @@ export const LoginRegister = ({ isLogin }: props) => {
           email,
           password,
           role: roleArray,
+          location: { lat: latAuto, lng: lngAuto },
         }
       );
       toast("Register successful! 💪", { autoClose: 1000 });
@@ -110,6 +135,12 @@ export const LoginRegister = ({ isLogin }: props) => {
     document.title = "Jamsessions | Register";
     getLocation();
   }, []);
+
+  function handleDrag(this: any) {
+    console.log(this.getPosition().toJSON());
+    setLat(this.getPosition().toJSON().lat);
+    setLng(this.getPosition().toJSON().lng);
+  }
 
   return (
     <Container
@@ -166,13 +197,32 @@ export const LoginRegister = ({ isLogin }: props) => {
                 </Box>
               </>
             ) : (
-              <GoogleMap
-                zoom={10}
-                center={center}
-                mapContainerClassName={styles.map}
-              >
-                <MarkerF position={center} />
-              </GoogleMap>
+              <>
+                <div className={cx(styles.autocomplete, "mt-3")}>
+                  <StandaloneSearchBox
+                    onLoad={(ref) => (inputRef.current = ref)}
+                    onPlacesChanged={handlePlaceChanged}
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Search your location"
+                      variant="soft"
+                    />
+                  </StandaloneSearchBox>
+                </div>
+
+                <GoogleMap
+                  zoom={10}
+                  center={center}
+                  mapContainerClassName={styles.map}
+                >
+                  <MarkerF
+                    position={center}
+                    draggable={true}
+                    onDragEnd={handleDrag}
+                  />
+                </GoogleMap>
+              </>
             )}
             {/* </>
             )} */}
