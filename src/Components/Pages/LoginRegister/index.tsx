@@ -13,7 +13,6 @@ import { MultiSelect } from "react-multi-select-component";
 import { toast } from "react-toastify";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
-import e from "express";
 
 export const LoginRegister = ({ isLogin }: props) => {
   //Page Navigation
@@ -137,7 +136,6 @@ export const LoginRegister = ({ isLogin }: props) => {
   }, []);
 
   function handleDrag(this: any) {
-    console.log(this.getPosition().toJSON());
     setLat(this.getPosition().toJSON().lat);
     setLng(this.getPosition().toJSON().lng);
   }

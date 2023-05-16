@@ -5,13 +5,14 @@ import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
 import { toast } from "react-toastify";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
 import { MultiSelect } from "react-multi-select-component";
 import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
+import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
 
 export const CreateASession = () => {
   //Page Navigation
@@ -21,12 +22,31 @@ export const CreateASession = () => {
   const [formData, setFormData] = useState({});
   const [currentLocation, setLocation] = useState<any>({});
   const [isData, setData] = useState(false);
+  const [latAuto, setLat] = useState();
+  const [lngAuto, setLng] = useState();
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
+    libraries: ["places"],
   });
+  const inputRef = useRef<any>();
 
-  //Create A Session
+  const handlePlaceChanged = () => {
+    const places = inputRef?.current?.getPlaces();
+    if (places && places.length > 0) {
+      const place = places[0];
+      if (place.geometry?.location) {
+        setLat(place.geometry.location.lat());
+        setLng(place.geometry.location.lng());
+      } else {
+        console.error("Invalid place object:", place);
+      }
+    } else {
+      console.error("No places found.");
+    }
+  };
+
+  //Create A Session info
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -87,6 +107,7 @@ export const CreateASession = () => {
         date,
         role: roleArray,
         genre: genreArray,
+        location: { lat: latAuto, lng: lngAuto },
       };
       await axios.post(
         (process.env.REACT_APP_API_URL as string) + "/sessions",
@@ -111,10 +132,16 @@ export const CreateASession = () => {
     document.title = "Jamsessions | Edit A Session";
   }, []);
 
-  const center2 = {
-    lat: currentLocation?.latitude,
-    lng: currentLocation?.longitude,
+  const center = {
+    lat: latAuto!,
+    lng: lngAuto!,
   };
+
+  function handleDrag(this: any) {
+    console.log(this.getPosition().toJSON());
+    setLat(this.getPosition().toJSON().lat);
+    setLng(this.getPosition().toJSON().lng);
+  }
 
   return (
     <>
@@ -171,13 +198,31 @@ export const CreateASession = () => {
                 </Box>
               </>
             ) : (
-              <GoogleMap
-                zoom={10}
-                center={center2}
-                mapContainerClassName={styles.map}
-              >
-                <MarkerF position={center2} />
-              </GoogleMap>
+              <>
+                <div className={cx(styles.autocomplete, "mt-3")}>
+                  <StandaloneSearchBox
+                    onLoad={(ref) => (inputRef.current = ref)}
+                    onPlacesChanged={handlePlaceChanged}
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Search your location"
+                      variant="soft"
+                    />
+                  </StandaloneSearchBox>
+                </div>
+                <GoogleMap
+                  zoom={10}
+                  center={center}
+                  mapContainerClassName={styles.map}
+                >
+                  <MarkerF
+                    position={center}
+                    draggable={true}
+                    onDragEnd={handleDrag}
+                  />
+                </GoogleMap>
+              </>
             )}
 
             <Button

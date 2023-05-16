@@ -1,5 +1,6 @@
 import { IUser } from "./IUser";
 import { IComment } from "./IComment";
+import { ILocation } from "./ILocation";
 
 export interface ISession {
   user: IUser;
@@ -7,7 +8,7 @@ export interface ISession {
   description: string;
   date: Date;
   role: Array<string>;
-  geolocation: string;
+  location: ILocation;
   comments: IComment[];
   genre: Array<string>;
   _id: string;
