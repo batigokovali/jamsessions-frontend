@@ -10,6 +10,10 @@ import { EditProfile } from "./Components/Pages/EditProfile";
 import { CreateAPost } from "./Components/Pages/CreateAPost";
 import { MySessions } from "./Components/Pages/MySessions";
 import { EditASession } from "./Components/Pages/EditSession";
+import { EditUserProfileData } from "./Components/Pages/EditProfile/ProfileData";
+import { EditUserPassword } from "./Components/Pages/EditProfile/Password";
+import { EditUserProfilePicture } from "./Components/Pages/EditProfile/ProfilePicture";
+import { EditUserLocation } from "./Components/Pages/EditProfile/Location";
 
 function App() {
   return (
@@ -73,6 +77,38 @@ function App() {
             </>
           }
           path="/edit-profile"
+        />
+        <Route
+          element={
+            <>
+              <NavbarMain /> <EditUserProfileData />
+            </>
+          }
+          path="/edit-profile/data"
+        />
+        <Route
+          element={
+            <>
+              <NavbarMain /> <EditUserPassword />
+            </>
+          }
+          path="/edit-profile/password"
+        />
+        <Route
+          element={
+            <>
+              <NavbarMain /> <EditUserProfilePicture />
+            </>
+          }
+          path="/edit-profile/picture"
+        />
+        <Route
+          element={
+            <>
+              <NavbarMain /> <EditUserLocation />
+            </>
+          }
+          path="/edit-profile/location"
         />
         <Route
           element={

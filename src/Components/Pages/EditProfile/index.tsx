@@ -1,115 +1,29 @@
-import Box from "@mui/material/Box";
 import { Container } from "@mui/material";
-import logo from "../assets/jamsessions-logo/png/logo-no-background.png";
 import styles from "./styles.module.css";
-import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
-
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
-import axios from "axios";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const EditProfile = () => {
-  const [formData, setFormData] = useState({});
-  const [isError, setError] = useState({ is: false, message: "" });
-  const navigate = useNavigate();
-  const [currentLocation, setLocation] = useState<any>({});
-  const [isData, setData] = useState(false);
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
-  });
-
   useEffect(() => {
-    getLocation();
+    document.title = "Jamsessions | Edit Profile";
   }, []);
 
-  const getLocation = async () => {
-    try {
-      const location = await axios.get("https://ipapi.co/json");
-      setLocation(location.data);
-      setData(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  console.log(currentLocation);
-
-  const center = useMemo(
-    () => ({
-      lat: currentLocation?.latitude,
-      lng: currentLocation?.longitude,
-    }),
-    []
-  );
-
-  const center2 = {
-    lat: currentLocation?.latitude,
-    lng: currentLocation?.longitude,
-  };
-
   return (
-    <Container>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <>
-          <Input
-            className={cx(styles.input)}
-            variant="soft"
-            placeholder="Username"
-          />
-          <Input
-            className={cx(styles.input, "mt-3")}
-            variant="soft"
-            placeholder="Email"
-          />
-          <Input
-            className={cx(styles.input, "mt-3")}
-            variant="soft"
-            placeholder="Password"
-          />
-          <Input
-            className={cx(styles.input, "mt-3")}
-            variant="soft"
-            placeholder="Role"
-          />
-          {!isData ? (
-            <>
-              <Box>
-                <p>Loading...</p>
-              </Box>
-            </>
-          ) : (
-            <GoogleMap
-              zoom={10}
-              center={center2}
-              mapContainerClassName={styles.map}
-            >
-              <MarkerF position={center2} />
-            </GoogleMap>
-          )}
-
-          <Button className={cx(styles.button, "mt-4")}>Save</Button>
-        </>
-      </Box>
+    <Container className="d-flex flex-column align-items-center">
+      <Link to={"/edit-profile/data"}>
+        <Button className="my-3">Change Profile Data</Button>
+      </Link>
+      <Link to={"/edit-profile/password"}>
+        <Button className="mb-3">Change Password</Button>
+      </Link>
+      <Link to={"/edit-profile/picture"}>
+        <Button className="mb-3">Change Profile Picture</Button>
+      </Link>
+      <Link to={"/edit-profile/location"}>
+        <Button className="mb-3">Change Location</Button>
+      </Link>
     </Container>
   );
 };
-
-interface props {
-  isLogin: boolean;
-}
-
-interface useLoadScript {
-  googleMapsApiKey: string;
-}

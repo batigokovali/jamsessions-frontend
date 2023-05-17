@@ -71,6 +71,36 @@ export const Home = () => {
     }
   };
 
+  function calculateDistance(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ): number {
+    const earthRadius = 6371; // Radius of the Earth in kilometers
+
+    // Convert latitude and longitude from degrees to radians
+    const latRad1 = toRadians(lat1);
+    const lonRad1 = toRadians(lon1);
+    const latRad2 = toRadians(lat2);
+    const lonRad2 = toRadians(lon2);
+
+    // Haversine formula
+    const diffLat = latRad2 - latRad1;
+    const diffLon = lonRad2 - lonRad1;
+    const a =
+      Math.sin(diffLat / 2) ** 2 +
+      Math.cos(latRad1) * Math.cos(latRad2) * Math.sin(diffLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadius * c;
+
+    return distance;
+  }
+
+  function toRadians(degrees: number): number {
+    return (degrees * Math.PI) / 180;
+  }
+
   const getProfileInfo = async () => {
     try {
       const { data } = await axios.get(
