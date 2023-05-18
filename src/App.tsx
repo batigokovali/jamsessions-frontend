@@ -14,6 +14,7 @@ import { EditUserProfileData } from "./Components/Pages/EditProfile/ProfileData"
 import { EditUserPassword } from "./Components/Pages/EditProfile/Password";
 import { EditUserProfilePicture } from "./Components/Pages/EditProfile/ProfilePicture";
 import { EditUserLocation } from "./Components/Pages/EditProfile/Location";
+import { MapView } from "./Components/Pages/MapView";
 
 function App() {
   return (
@@ -21,53 +22,18 @@ function App() {
       <Routes>
         <Route element={<LoginRegister />} path="/" />
         <Route element={<LoginRegister isLogin={false} />} path="/register" />
+        <Route element={<Home />} path="/home" />
+        <Route element={<MapView />} path="/map-view" />
         <Route
-          element={
-            <>
-              <Home />
-            </>
-          }
-          path="/home"
-        />
-        <Route
-          element={
-            <>
-              <SessionDetails />
-            </>
-          }
+          element={<SessionDetails />}
           path="/session-details/:sessionID"
         />
-        <Route
-          element={
-            <>
-              <MySessions />
-            </>
-          }
-          path="/my-sessions"
-        />
-        <Route
-          element={
-            <>
-              <CreateASession />
-            </>
-          }
-          path="/create-a-session"
-        />
+        <Route element={<MySessions />} path="/my-sessions" />
+        <Route element={<CreateASession />} path="/create-a-session" />
         <Route element={<EditASession />} path="/edit-a-session/:sessionID" />
+        <Route element={<UserProfile state={true} />} path="/profile" />
         <Route
-          element={
-            <>
-              <UserProfile state={true} />
-            </>
-          }
-          path="/profile"
-        />
-        <Route
-          element={
-            <>
-              <UserProfile state={false} />
-            </>
-          }
+          element={<UserProfile state={false} />}
           path="/profile/:userID"
         />
         <Route

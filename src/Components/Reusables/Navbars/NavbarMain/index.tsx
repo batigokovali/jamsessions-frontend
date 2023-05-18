@@ -38,6 +38,9 @@ export const NavbarMain = () => {
             <Link to="/home" className="me-3">
               Home
             </Link>
+            <Link to="/map-view" className="me-3">
+              Map View
+            </Link>
             <Link to="/my-sessions">My Sessions</Link>
           </div>
           <div className="d-flex align-items-center me-5">

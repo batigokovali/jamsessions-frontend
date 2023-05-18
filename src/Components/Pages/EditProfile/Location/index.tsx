@@ -1,17 +1,13 @@
 import Box from "@mui/material/Box";
 import { Container } from "@mui/material";
-import logo from "../assets/jamsessions-logo/png/logo-no-background.png";
 import styles from "./styles.module.css";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
-import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
+import { StandaloneSearchBox } from "@react-google-maps/api";
 import { useEffect, useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
-import { MultiSelect } from "react-multi-select-component";
 import { ILocation } from "../../../../Types/ILocation";
 
 export const EditUserLocation = () => {
@@ -37,8 +33,6 @@ export const EditUserLocation = () => {
     setLng(this.getPosition().toJSON().lng);
     setLocation({ lat: latAuto!, lng: lngAuto! });
   }
-  console.log("center:", center);
-  console.log("dragged", location);
 
   //lat lng info from marker
   const inputRef = useRef<any>();

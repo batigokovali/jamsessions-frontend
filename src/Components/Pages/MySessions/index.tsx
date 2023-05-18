@@ -34,6 +34,7 @@ export const MySessions = () => {
   }, []);
 
   console.log(createdSessions);
+  const distance = 0;
 
   return (
     <>
@@ -45,6 +46,7 @@ export const MySessions = () => {
         state={false}
         state2={true}
         fetch={getProfileInfo}
+        distance={distance as number}
       />
       <NavbarSecond name={"My Sessions" as string} />
       <SessionsCard
@@ -53,6 +55,7 @@ export const MySessions = () => {
         state={true}
         state2={false}
         fetch={getProfileInfo}
+        distance={distance as number}
       />
     </>
   );
