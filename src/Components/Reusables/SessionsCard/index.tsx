@@ -10,6 +10,7 @@ import cx from "classnames";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/joy/Button/Button";
+import Badge from "react-bootstrap/Badge";
 
 interface props {
   sessions: ISession[];
@@ -92,7 +93,6 @@ export const SessionsCard = ({
 
   console.log(user);
   console.log(sessions);
-  console.log("distance from user test:", distance);
 
   return (
     <>
@@ -113,36 +113,53 @@ export const SessionsCard = ({
               }
             })
             .map((session: ISession) => (
-              <Col sm={3} md={3} lg={3}>
+              <Col sm={6} md={6} lg={3}>
                 <Card className={cx(styles.card, "mb-3")}>
                   <Card.Body>
-                    <Link to={`/session-details/${session?._id}`}>
-                      <Card.Title>{session?.title}</Card.Title>
-                    </Link>
-                    <Link to={`/profile/${session?.user._id}`}>
-                      <Card.Text>By: {session?.user.username}</Card.Text>
+                    <Link
+                      to={`/session-details/${session?._id}`}
+                      className={cx(styles.title)}
+                    >
+                      <Card.Title className={"text-truncate"}>
+                        {session?.title}
+                      </Card.Title>
                     </Link>
 
-                    <Card.Text className="text-truncate">
-                      {session?.description}
-                    </Card.Text>
-                    <Card.Text>Role Needed: {session?.role}</Card.Text>
-                    <Card.Text>Genre: {session?.genre}</Card.Text>
+                    <div className="d-flex flex-column align-items-center">
+                      <Card.Text className="mb-3 text-truncate">
+                        <Link
+                          to={`/profile/${session?.user._id}`}
+                          className={cx(styles.title)}
+                        >
+                          {session?.user.username}
+                        </Link>
+                      </Card.Text>
+                      <Card.Text className="text-truncate mb-1">
+                        <Badge bg="primary">{session?.role}</Badge>{" "}
+                        <Badge bg="success">{session?.genre}</Badge>
+                      </Card.Text>
+                      <Card.Text className="text-truncate mb-1"></Card.Text>
 
-                    <Card.Text>
-                      Distance:{" "}
-                      {calculateDistance(
-                        user?.location?.lat as number,
-                        user?.location?.lng as number,
-                        session?.location?.lat as number,
-                        session?.location?.lng as number
-                      )}{" "}
-                      km away
-                    </Card.Text>
-                    <Card.Text>
-                      Date:{" "}
-                      {format(new Date(session?.date), "do 'of' MMMM',' EEEE ")}
-                    </Card.Text>
+                      <Card.Text className="text-truncate mb-1">
+                        <Badge bg="info">
+                          {calculateDistance(
+                            user?.location?.lat as number,
+                            user?.location?.lng as number,
+                            session?.location?.lat as number,
+                            session?.location?.lng as number
+                          )}{" "}
+                          km away
+                        </Badge>
+                      </Card.Text>
+                      <Card.Text>
+                        <Badge bg="secondary">
+                          {format(
+                            new Date(session?.date),
+                            "do 'of' MMMM',' EEEE "
+                          )}
+                        </Badge>
+                      </Card.Text>
+                    </div>
                   </Card.Body>
                   {state ? (
                     <Row className="my-3">

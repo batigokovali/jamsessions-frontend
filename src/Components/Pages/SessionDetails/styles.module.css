@@ -1,0 +1,17 @@
+.map {
+  width: 100%;
+  height: 65vh;
+  border-radius: 25px;
+}
+
+.title {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  transition: text-shadow 250ms;
+}
+
+.title:hover {
+  text-shadow: 2px 2px 0 #bcbcbc, 4px 4px 0 #9c9c9c;
+  color: black;
+}

@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { IUser } from "../../../Types/IUser";
+import { FiPlus, FiEdit2 } from "react-icons/fi";
 
 interface props {
   userData: IUser;
@@ -13,24 +14,39 @@ export const ProfileInfo = ({ userData, state }: props) => {
   return (
     <Container className="mt-5">
       <Row>
-        <Col xs={2} md={2} lg={2}>
+        <Col xs={4} md={4} lg={3}>
           <img src={userData?.avatar} className={styles.image} alt="" />
         </Col>
-        <Col xs={2} md={2} lg={2}>
+        <Col xs={3} md={2} lg={2}>
           <p>{userData?.username}</p>
         </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col xs={2} md={2} lg={2}>
+        <Col
+          xs={2}
+          md={1}
+          lg={1}
+          className="ms-auto d-flex flex-column text-white"
+        >
           {state ? (
-            <Link to="/create-a-post">
-              <Button variant="contained">Create A Post</Button>
-            </Link>
+            <>
+              <div className="d-flex flex-column ms-auto align-items-center">
+                <Link to="/create-a-post">
+                  <Button variant="contained" className="mb-3">
+                    <FiPlus />
+                  </Button>
+                </Link>
+                <Link to="/edit-profile">
+                  <Button variant="contained">
+                    <FiEdit2 />
+                  </Button>
+                </Link>
+              </div>
+            </>
           ) : (
             <></>
           )}
         </Col>
       </Row>
+      <Row className="mt-3"></Row>
     </Container>
   );
 };

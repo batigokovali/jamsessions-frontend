@@ -1,23 +1,7 @@
-.image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-#mainnavbar {
-  background-color: rgb(217, 217, 217);
-  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
 #secondnavbar {
   background-color: rgb(167, 167, 167);
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.imageNavbar {
-  width: 80%;
-  object-fit: contain;
+  z-index: -1;
 }
 
 .button {
@@ -32,8 +16,9 @@
 }
 
 .multiselect {
-  width: 15vw;
+  width: 20vw;
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
 }
 
 .filters {

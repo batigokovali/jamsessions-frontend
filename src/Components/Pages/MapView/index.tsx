@@ -137,7 +137,7 @@ export const MapView = () => {
                         <Link to={`/session-details/${selectedMarker?._id}`}>
                           <h6>{selectedMarker?.title}</h6>
                         </Link>
-                        <p>kek</p>
+                        <p>{selectedMarker?.genre}</p>
                       </div>
                     </InfoWindowF>
                   )}

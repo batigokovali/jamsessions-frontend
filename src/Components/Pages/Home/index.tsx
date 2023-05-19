@@ -62,7 +62,6 @@ export const Home = () => {
       setSessions(sessions.data.sessions);
       roleArray = [];
       genreArray = [];
-      console.log(roleArray);
     } catch (error) {
       console.log(error);
     }
@@ -87,6 +86,7 @@ export const Home = () => {
   useEffect(() => {
     getSessions();
     getProfileInfo();
+    document.title = "Jamsessions | Home";
   }, [roles, genres]);
 
   return (
@@ -95,25 +95,25 @@ export const Home = () => {
       <Navbar id={styles.secondnavbar} expand="lg">
         <Container className="d-flex">
           <div className="d-flex align-items-center">
-            <p className="mb-0">Roles: </p>
-            <div>
+            <div id="roles">
               <MultiSelect
+                overrideStrings={{ selectSomeItems: "Roles" }}
                 options={options}
                 value={roles}
                 onChange={setRoles}
                 labelledBy="Role"
-                className={cx(styles.multiselect)}
+                className={cx(styles.multiselect, "roles")}
               />
             </div>
           </div>
           <div className="d-flex align-items-center">
-            <p className="mb-0">Genres: </p>
             <MultiSelect
+              overrideStrings={{ selectSomeItems: "Genres" }}
               options={options2}
               value={genres}
               onChange={setGenres}
               labelledBy="Genre"
-              className={cx(styles.multiselect)}
+              className={cx(styles.multiselect, "genres")}
             />
           </div>
           <Input

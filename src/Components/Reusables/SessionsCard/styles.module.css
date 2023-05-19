@@ -1,4 +1,16 @@
 .card {
-  height: 35vh;
+  height: 28vh;
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-decoration: none;
+  color: black;
+  font-weight: 400;
+  transition: text-shadow 250ms;
+}
+
+.title:hover {
+  text-shadow: 2px 2px 0 #bcbcbc, 4px 4px 0 #9c9c9c;
+  color: black;
 }
