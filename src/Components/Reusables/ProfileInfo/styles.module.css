@@ -5,6 +5,21 @@
   border-radius: 50%;
 }
 
+.username {
+  font-weight: 600;
+  color: white;
+}
+
+.address {
+  font-size: 14px;
+  color: white;
+}
+
+.button {
+  width: 25px !important;
+  height: 25px;
+}
+
 @media screen and (max-width: 600px) {
   .image {
     width: 100px;

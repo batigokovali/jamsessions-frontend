@@ -120,7 +120,7 @@ export const SessionsCard = ({
                       to={`/session-details/${session?._id}`}
                       className={cx(
                         styles.title,
-                        "d-flex justify-content-center"
+                        "d-flex justify-content-center text-white"
                       )}
                     >
                       <Card.Title className="text-truncate">

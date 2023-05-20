@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { IUser } from "../../../Types/IUser";
 import { FiPlus, FiEdit2 } from "react-icons/fi";
+import cx from "classnames";
 
 interface props {
   userData: IUser;
@@ -13,42 +14,42 @@ interface props {
 
 export const ProfileInfo = ({ userData, state, address }: props) => {
   return (
-    <Container className="mt-5">
-      <Row>
+    <Container className="mt-3">
+      <Row className="d-">
         <Col xs={4} md={4} lg={3}>
           <img src={userData?.avatar} className={styles.image} alt="" />
         </Col>
-        <Col xs={3} md={2} lg={2}>
-          <p>{userData?.username}</p>
-          <p>{address}</p>
+        <Col xs={5} md={2} lg={6}>
+          <p className={cx(styles.username, "mb-1")}>{userData?.username}</p>
+          <p className={cx(styles.address, "mb-0")}>📍{address}</p>
         </Col>
-        <Col
-          xs={2}
-          md={1}
-          lg={1}
-          className="ms-auto d-flex flex-column text-white"
-        >
-          {state ? (
-            <>
-              <div className="d-flex flex-column ms-auto align-items-center">
-                <Link to="/create-a-post">
-                  <Button variant="contained" className="mb-3">
-                    <FiPlus />
-                  </Button>
-                </Link>
-                <Link to="/edit-profile">
-                  <Button variant="contained">
-                    <FiEdit2 />
-                  </Button>
-                </Link>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
-        </Col>
+        {state ? (
+          <Col
+            xs={3}
+            md={1}
+            lg={1}
+            className="d-flex flex-column text-white ms-auto"
+          >
+            <div className="d-flex flex-column align-items-center">
+              <Link to="/create-a-post">
+                <Button
+                  variant="contained"
+                  className={cx(styles.button, "mb-3")}
+                >
+                  <FiPlus />
+                </Button>
+              </Link>
+              <Link to="/edit-profile">
+                <Button variant="contained" className={cx(styles.button)}>
+                  <FiEdit2 />
+                </Button>
+              </Link>
+            </div>
+          </Col>
+        ) : (
+          <></>
+        )}
       </Row>
-      <Row className="mt-3"></Row>
     </Container>
   );
 };

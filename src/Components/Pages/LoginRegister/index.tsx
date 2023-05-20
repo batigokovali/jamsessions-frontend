@@ -13,6 +13,7 @@ import { MultiSelect } from "react-multi-select-component";
 import { toast } from "react-toastify";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export const LoginRegister = ({ isLogin }: props) => {
   //Page Navigation
@@ -29,6 +30,18 @@ export const LoginRegister = ({ isLogin }: props) => {
   });
 
   const inputRef = useRef<any>();
+
+  //Toggling password
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [password2, setPassword2] = useState("");
+
+  const handleToggleVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
 
   const handlePlaceChanged = () => {
     const places = inputRef?.current?.getPlaces();
@@ -176,6 +189,19 @@ export const LoginRegister = ({ isLogin }: props) => {
               className={cx(styles.input, "mt-3")}
               variant="soft"
               placeholder="Password"
+              type={passwordVisible ? "text" : "password"}
+              value={password}
+              endDecorator={
+                <Button
+                  variant="solid"
+                  color="primary"
+                  type="submit"
+                  sx={{ borderTopLeftRadius: 5, borderBottomLeftRadius: 5 }}
+                  onClick={handleToggleVisibility}
+                >
+                  {passwordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
+                </Button>
+              }
               onChange={(val) => setPassword(val.currentTarget.value)}
             />
             <div className={cx(styles.multiselect, "mt-3")}>
@@ -245,11 +271,24 @@ export const LoginRegister = ({ isLogin }: props) => {
               variant="soft"
               placeholder="Password"
               onChange={(val) => setPassword(val.currentTarget.value)}
+              type={passwordVisible ? "text" : "password"}
+              value={password}
+              endDecorator={
+                <Button
+                  variant="solid"
+                  color="primary"
+                  type="submit"
+                  sx={{ borderTopLeftRadius: 5, borderBottomLeftRadius: 5 }}
+                  onClick={handleToggleVisibility}
+                >
+                  {passwordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
+                </Button>
+              }
             />
             <Button className={cx(styles.button, "mt-4")} onClick={handleLogin}>
               Sign In
             </Button>
-            <p className="mt-4">
+            <p className="mt-4 text-white">
               Don't have an account? <Link to="/register">Register Here.</Link>
             </p>
             <Button className={cx(styles.button, "mt-3")}>

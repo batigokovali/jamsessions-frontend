@@ -6,12 +6,15 @@ import cx from "classnames";
 import { Container } from "react-bootstrap";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const CreateAPost = () => {
   //Media Upload
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [mediaData, setMediaData] = useState<FormData | null>(null);
+
+  const navigate = useNavigate();
 
   const handleFile = (e: any) => {
     const media = e.target.files[0];
@@ -42,6 +45,7 @@ export const CreateAPost = () => {
           },
         }
       );
+      navigate("/profile");
     } catch (error) {
       console.log(error);
     }
