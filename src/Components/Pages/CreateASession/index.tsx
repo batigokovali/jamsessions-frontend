@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { Container } from "@mui/material";
+import { Container } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
@@ -146,93 +146,78 @@ export const CreateASession = () => {
   return (
     <>
       <NavbarMain />
-      <Container>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <>
-            <Input
-              className={cx(styles.input)}
-              variant="soft"
-              placeholder="Title"
-              onChange={(val) => setTitle(val.currentTarget.value)}
-            />
-            <Input
-              className={cx(styles.input, "mt-3")}
-              variant="soft"
-              placeholder="Description"
-              onChange={(val) => setDescription(val.currentTarget.value)}
-            />
-            <Input
-              className={cx(styles.input, "mt-3")}
-              variant="soft"
-              placeholder="date"
-              type="date"
-              onChange={(val) => setDate(val.currentTarget.value)}
-            />
-            <div className={cx(styles.multiselect, "mt-3")}>
-              <MultiSelect
-                options={options}
-                value={selected}
-                onChange={setSelected}
-                labelledBy="Role"
-              />
-            </div>
-            <div className={cx(styles.multiselect, "mt-3")}>
-              <MultiSelect
-                options={options2}
-                value={selected2}
-                onChange={setSelected2}
-                labelledBy="Genre"
-              />
-            </div>
-            {!isData ? (
-              <>
-                <Box>
-                  <p>Loading...</p>
-                </Box>
-              </>
-            ) : (
-              <>
-                <div className={cx(styles.autocomplete, "mt-3")}>
-                  <StandaloneSearchBox
-                    onLoad={(ref) => (inputRef.current = ref)}
-                    onPlacesChanged={handlePlaceChanged}
-                  >
-                    <Input
-                      type="text"
-                      placeholder="Search your location"
-                      variant="soft"
-                    />
-                  </StandaloneSearchBox>
-                </div>
-                <GoogleMap
-                  zoom={10}
-                  center={center}
-                  mapContainerClassName={styles.map}
-                >
-                  <MarkerF
-                    position={center}
-                    draggable={true}
-                    onDragEnd={handleDrag}
-                  />
-                </GoogleMap>
-              </>
-            )}
+      <Container className="d-flex flex-column justify-content-center align-items-center">
+        <Input
+          className={cx(styles.input)}
+          variant="soft"
+          placeholder="Title"
+          onChange={(val) => setTitle(val.currentTarget.value)}
+        />
+        <Input
+          className={cx(styles.input, "mt-3")}
+          variant="soft"
+          placeholder="Description"
+          onChange={(val) => setDescription(val.currentTarget.value)}
+        />
+        <Input
+          className={cx(styles.input, "mt-3")}
+          variant="soft"
+          placeholder="date"
+          type="date"
+          onChange={(val) => setDate(val.currentTarget.value)}
+        />
 
-            <Button
-              className={cx(styles.button, "mt-4")}
-              onClick={handleSubmit}
-            >
-              Create A Session
-            </Button>
+        <MultiSelect
+          options={options}
+          value={selected}
+          onChange={setSelected}
+          labelledBy="Role"
+          className={cx(styles.multiselect, "mt-3")}
+        />
+
+        <MultiSelect
+          options={options2}
+          value={selected2}
+          onChange={setSelected2}
+          labelledBy="Genre"
+          className={cx(styles.multiselect, "mt-3")}
+        />
+
+        {!isData ? (
+          <>
+            <p>Loading...</p>
           </>
-        </Box>
+        ) : (
+          <>
+            <div className={cx(styles.autocomplete, "mt-3")}>
+              <StandaloneSearchBox
+                onLoad={(ref) => (inputRef.current = ref)}
+                onPlacesChanged={handlePlaceChanged}
+              >
+                <Input
+                  type="text"
+                  placeholder="Search your location"
+                  variant="soft"
+                />
+              </StandaloneSearchBox>
+            </div>
+            <GoogleMap
+              zoom={10}
+              center={center}
+              mapContainerClassName={styles.map}
+            >
+              <MarkerF
+                position={center}
+                draggable={true}
+                onDragEnd={handleDrag}
+              />
+            </GoogleMap>
+          </>
+        )}
+
+        <Button className={cx(styles.button, "mt-4")} onClick={handleSubmit}>
+          Create A Session
+        </Button>
       </Container>
     </>
   );

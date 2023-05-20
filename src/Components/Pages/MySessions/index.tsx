@@ -30,6 +30,7 @@ export const MySessions = () => {
   };
 
   useEffect(() => {
+    document.title = "Jamsessions | My Sessions";
     getProfileInfo();
   }, []);
 

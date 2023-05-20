@@ -8,9 +8,10 @@ import { FiPlus, FiEdit2 } from "react-icons/fi";
 interface props {
   userData: IUser;
   state: boolean;
+  address: string;
 }
 
-export const ProfileInfo = ({ userData, state }: props) => {
+export const ProfileInfo = ({ userData, state, address }: props) => {
   return (
     <Container className="mt-5">
       <Row>
@@ -19,6 +20,7 @@ export const ProfileInfo = ({ userData, state }: props) => {
         </Col>
         <Col xs={3} md={2} lg={2}>
           <p>{userData?.username}</p>
+          <p>{address}</p>
         </Col>
         <Col
           xs={2}

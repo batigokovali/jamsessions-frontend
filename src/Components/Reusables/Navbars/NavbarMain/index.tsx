@@ -1,4 +1,6 @@
 import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "@mui/joy/Button/Button";
 import styles from "./styles.module.css";
@@ -33,30 +35,35 @@ export const NavbarMain = () => {
 
   return (
     <>
-      <Navbar id={styles.mainnavbar} expand="lg">
-        <Container fluid className="d-flex justify-content-between">
-          <div className="d-flex ms-5 navcontainer">
-            <Link to="/home" className={cx(styles.navbarelements, "me-3")}>
-              Home
-            </Link>
-            <Link to="/map-view" className={cx(styles.navbarelements, "me-3")}>
-              Map View
-            </Link>
-            <Link to="/my-sessions" className={cx(styles.navbarelements)}>
-              My Sessions
-            </Link>
-          </div>
+      <Navbar expand="lg" id={styles.mainnavbar}>
+        <Container>
           <div className="d-flex align-items-center me-5">
+            <Link to="/profile" className={cx("me-3")}>
+              <img src={user?.avatar} alt="" className={styles.image} />
+            </Link>
             <Link to="/create-a-session">
               <Button className={cx(styles.button, "me-3")}>
                 Create A Session
               </Button>
             </Link>
-
-            <Link to="/profile" className={cx(styles.navbarelements)}>
-              <img src={user?.avatar} alt="" className={styles.image} />
-            </Link>
           </div>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Link to="/home" className={cx(styles.navbarelements, "me-3")}>
+                Home
+              </Link>
+              <Link
+                to="/map-view"
+                className={cx(styles.navbarelements, "me-3")}
+              >
+                Map View
+              </Link>
+              <Link to="/my-sessions" className={cx(styles.navbarelements)}>
+                My Sessions
+              </Link>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>

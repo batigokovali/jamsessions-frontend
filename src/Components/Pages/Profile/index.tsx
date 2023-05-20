@@ -13,12 +13,10 @@ interface props {
 }
 
 export const UserProfile = ({ state }: props) => {
-  console.log(state);
   const { userID } = useParams();
-
   const [feed, setFeeds] = useState<IFeeds[]>();
-  const [playing, setPlaying] = useState(false);
   const [userData, setUserData] = useState<IUser>();
+  const [userAddress, setUserAddress] = useState("");
 
   const getUserProfile = async () => {
     try {
@@ -80,15 +78,41 @@ export const UserProfile = ({ state }: props) => {
     }
   };
 
+  const getUserAddress = async () => {
+    try {
+      if (userData) {
+        const { data } = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userData?.location.lat},${userData?.location.lng}&location_type=ROOFTOP&result_type=street_address&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+        );
+        setUserAddress(data.results[0].formatted_address);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getUserProfile();
     getUserFeed();
+    document.title = `Jamsessions | Profile`;
   }, [state]);
+
+  useEffect(() => {
+    if (userData) {
+      getUserAddress();
+    }
+  }, [userData]);
+  console.log(userData);
+  console.log(userAddress);
 
   return (
     <>
       <NavbarMain />
-      <ProfileInfo userData={userData as IUser} state={state} />
+      <ProfileInfo
+        userData={userData as IUser}
+        state={state}
+        address={userAddress}
+      />
       <MediaItem feed={feed as IFeeds[]} />
     </>
   );

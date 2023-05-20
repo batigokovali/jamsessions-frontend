@@ -96,7 +96,7 @@ export const SessionsCard = ({
 
   return (
     <>
-      <Container className="mt-5">
+      <Container className="mt-3">
         <Row>
           {sessions
             ?.filter((session) => {
@@ -118,9 +118,12 @@ export const SessionsCard = ({
                   <Card.Body>
                     <Link
                       to={`/session-details/${session?._id}`}
-                      className={cx(styles.title)}
+                      className={cx(
+                        styles.title,
+                        "d-flex justify-content-center"
+                      )}
                     >
-                      <Card.Title className={"text-truncate"}>
+                      <Card.Title className="text-truncate">
                         {session?.title}
                       </Card.Title>
                     </Link>

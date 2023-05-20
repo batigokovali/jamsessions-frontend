@@ -93,29 +93,23 @@ export const Home = () => {
     <>
       <NavbarMain />
       <Navbar id={styles.secondnavbar} expand="lg">
-        <Container className="d-flex">
-          <div className="d-flex align-items-center">
-            <div id="roles">
-              <MultiSelect
-                overrideStrings={{ selectSomeItems: "Roles" }}
-                options={options}
-                value={roles}
-                onChange={setRoles}
-                labelledBy="Role"
-                className={cx(styles.multiselect, "roles")}
-              />
-            </div>
-          </div>
-          <div className="d-flex align-items-center">
-            <MultiSelect
-              overrideStrings={{ selectSomeItems: "Genres" }}
-              options={options2}
-              value={genres}
-              onChange={setGenres}
-              labelledBy="Genre"
-              className={cx(styles.multiselect, "genres")}
-            />
-          </div>
+        <Container className="d-flex align-items-center justify-content-between">
+          <MultiSelect
+            overrideStrings={{ selectSomeItems: "Roles" }}
+            options={options}
+            value={roles}
+            onChange={setRoles}
+            labelledBy="Role"
+            className={cx(styles.multiselect, "roles")}
+          />
+          <MultiSelect
+            overrideStrings={{ selectSomeItems: "Genres" }}
+            options={options2}
+            value={genres}
+            onChange={setGenres}
+            labelledBy="Genre"
+            className={cx(styles.multiselect, "genres")}
+          />
           <Input
             className={cx(styles.input)}
             variant="soft"
