@@ -113,7 +113,7 @@ export const UserProfile = ({ state }: props) => {
         state={state}
         address={userAddress}
       />
-      <MediaItem feed={feed as IFeeds[]} />
+      <MediaItem state={state} feed={feed as IFeeds[]} fetch={getUserFeed} />
     </>
   );
 };

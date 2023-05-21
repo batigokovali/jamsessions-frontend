@@ -7,14 +7,24 @@ import { Container } from "react-bootstrap";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FadeLoader } from "react-spinners";
 
 export const CreateAPost = () => {
-  //Media Upload
+  // Media Upload
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [mediaData, setMediaData] = useState<FormData | null>(null);
+  const [isInputsValid, setIsInputsValid] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if inputs are not empty
+    setIsInputsValid(
+      title.trim() !== "" && description.trim() !== "" && mediaData !== null
+    );
+  }, [title, description, mediaData]);
 
   const handleFile = (e: any) => {
     const media = e.target.files[0];
@@ -25,6 +35,12 @@ export const CreateAPost = () => {
 
   const postPost = async () => {
     try {
+      if (!isInputsValid) {
+        // If inputs are empty, do not proceed
+        return;
+      }
+      setLoading(true);
+
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
@@ -45,6 +61,7 @@ export const CreateAPost = () => {
           },
         }
       );
+      setLoading(false);
       navigate("/profile");
     } catch (error) {
       console.log(error);
@@ -53,14 +70,7 @@ export const CreateAPost = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <Container className="d-flex flex-column justify-content-center align-items-center">
         <Input
           className={cx(styles.input)}
           variant="soft"
@@ -79,10 +89,21 @@ export const CreateAPost = () => {
           type="file"
           onChange={handleFile}
         />
-        <Button className="mt-3" onClick={postPost}>
+        <Button
+          className="mt-3"
+          onClick={postPost}
+          disabled={!isInputsValid} // Disable button when inputs are empty
+        >
           Create A Post
         </Button>
-      </Box>
+        <div className="w-100 d-flex justify-content-center align-items-center">
+          {isLoading ? (
+            <FadeLoader className="ms-3 mt-5" color="#ffffff" />
+          ) : (
+            <></>
+          )}
+        </div>
+      </Container>
     </>
   );
 };

@@ -61,7 +61,9 @@ export const SessionDetails = () => {
               <Col>
                 <Row>
                   <Col>
-                    <p className={cx(styles.title)}>{session?.title}</p>
+                    <p className={cx(styles.title, "text-white")}>
+                      {session?.title}
+                    </p>
                   </Col>
                   <Col className="text-truncate">
                     <Link to={`/profile/${session?.user._id}`}>
@@ -70,7 +72,7 @@ export const SessionDetails = () => {
                   </Col>
                 </Row>
 
-                <p> {session?.description}</p>
+                <p className="text-white"> {session?.description}</p>
               </Col>
               <Col className="d-flex">
                 <p className="ms-auto">

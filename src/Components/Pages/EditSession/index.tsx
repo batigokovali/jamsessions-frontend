@@ -21,7 +21,6 @@ export const EditASession = () => {
   console.log(sessionID);
 
   //Geolocation
-  const [formData, setFormData] = useState({});
   const [currentLocation, setLocation] = useState<any>({});
   const [isData, setData] = useState(false);
 
@@ -89,52 +88,40 @@ export const EditASession = () => {
       e.preventDefault();
       selected.forEach((el) => roleArray.push(el.value));
       selected2.forEach((el) => genreArray.push(el.value));
-      if (roleArray.length === 0 && genreArray.length === 0) {
-        const editedSessionData = {
-          title,
-          description,
-          date,
-          role: sessionData?.role,
-          genre: sessionData?.genre,
-        };
-        await axios.put(
-          (process.env.REACT_APP_API_URL as string) + `/sessions/${sessionID}`,
-          editedSessionData,
-          {
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
-        toast("Editing session successful! 💪", { autoClose: 1000 });
-        roleArray = [];
-        genreArray = [];
-        navigate("/my-sessions");
-      } else {
-        const editedSessionData = {
-          title,
-          description,
-          date,
-          role: roleArray,
-          genre: genreArray,
-        };
 
-        await axios.put(
-          (process.env.REACT_APP_API_URL as string) + `/sessions/${sessionID}`,
-          editedSessionData,
-          {
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
-        toast("Editing session successful! 💪", { autoClose: 1000 });
-        roleArray = [];
-        genreArray = [];
-        navigate("/my-sessions");
+      if (roleArray.length === 0 && genreArray.length === 0) {
+        setError("Please select at least one role or genre.");
+        return;
       }
+
+      if (!title || !description || !date) {
+        setError("Please fill in all the required fields.");
+        return;
+      }
+
+      const editedSessionData = {
+        title,
+        description,
+        date,
+        role: roleArray,
+        genre: genreArray,
+      };
+
+      await axios.put(
+        (process.env.REACT_APP_API_URL as string) + `/sessions/${sessionID}`,
+        editedSessionData,
+        {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+
+      toast("Editing session successful! 💪", { autoClose: 1000 });
+      roleArray = [];
+      genreArray = [];
+      navigate("/my-sessions");
     } catch (error) {
       console.log(error);
     }
@@ -173,76 +160,65 @@ export const EditASession = () => {
   return (
     <>
       <NavbarMain />
-      <Container>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+      <Container className="mt-3 d-flex flex-column justify-content-center align-items-center">
+        <Input
+          className={cx(styles.input)}
+          variant="soft"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <Input
+          className={cx(styles.input, "mt-3")}
+          variant="soft"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <Input
+          className={cx(styles.input, "mt-3")}
+          variant="soft"
+          placeholder="Date"
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+        <div className={cx(styles.input, "mt-3")}>
+          <MultiSelect
+            options={options}
+            value={selected}
+            onChange={setSelected}
+            labelledBy="Role"
+          />
+        </div>
+        <div className={cx(styles.input, "mt-3")}>
+          <MultiSelect
+            options={options2}
+            value={selected2}
+            onChange={setSelected2}
+            labelledBy="Genre"
+          />
+        </div>
+        {error && <p className="error-msg">{error}</p>}
+        {!isData ? (
           <>
-            <Input
-              className={cx(styles.input)}
-              variant="soft"
-              placeholder="Title"
-              onChange={(val) => setTitle(val.currentTarget.value)}
-            />
-            <Input
-              className={cx(styles.input, "mt-3")}
-              variant="soft"
-              placeholder="Description"
-              defaultValue={sessionData?.description}
-              onChange={(val) => setDescription(val.currentTarget.value)}
-            />
-            <Input
-              className={cx(styles.input, "mt-3")}
-              variant="soft"
-              placeholder="date"
-              type="date"
-              onChange={(val) => setDate(val.currentTarget.value)}
-            />
-            <div className={cx(styles.multiselect, "mt-3")}>
-              <MultiSelect
-                options={options}
-                value={selected}
-                onChange={setSelected}
-                labelledBy="Role"
-              />
-            </div>
-            <div className={cx(styles.multiselect, "mt-3")}>
-              <MultiSelect
-                options={options2}
-                value={selected2}
-                onChange={setSelected2}
-                labelledBy="Genre"
-              />
-            </div>
-            {!isData ? (
-              <>
-                <Box>
-                  <p>Loading...</p>
-                </Box>
-              </>
-            ) : (
-              <GoogleMap
-                zoom={10}
-                center={center2}
-                mapContainerClassName={styles.map}
-              >
-                <MarkerF position={center2} />
-              </GoogleMap>
-            )}
-
-            <Button
-              className={cx(styles.button, "mt-4")}
-              onClick={handleSubmit}
-            >
-              Edit Session
-            </Button>
+            <Box>
+              <p>Loading...</p>
+            </Box>
           </>
-        </Box>
+        ) : (
+          <GoogleMap
+            zoom={10}
+            center={center2}
+            mapContainerClassName={styles.map}
+          >
+            <MarkerF position={center2} />
+          </GoogleMap>
+        )}
+
+        <Button className={cx(styles.button, "mt-4")} onClick={handleSubmit}>
+          Edit Session
+        </Button>
       </Container>
     </>
   );

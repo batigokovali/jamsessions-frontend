@@ -25,7 +25,23 @@
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (max-width: 991px) {
+.logo {
+  height: 30px;
+}
+
+@media screen and (max-width: 992px) {
+  #toggle {
+    order: -1;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .imagelink {
+    order: 1;
+  }
+}
+
+@media screen and (max-width: 992px) {
   .navbarelements {
     margin-top: 1vh;
     margin-bottom: 1vh;

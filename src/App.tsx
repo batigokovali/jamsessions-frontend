@@ -15,6 +15,7 @@ import { EditUserPassword } from "./Components/Pages/EditProfile/Password";
 import { EditUserProfilePicture } from "./Components/Pages/EditProfile/ProfilePicture";
 import { EditUserLocation } from "./Components/Pages/EditProfile/Location";
 import { MapView } from "./Components/Pages/MapView";
+import { EditFeed } from "./Components/Pages/EditFeed";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           element={<UserProfile state={false} />}
           path="/profile/:userID"
         />
+        <Route element={<EditFeed />} path="/edit-a-feed/:feedID" />
         <Route
           element={
             <>

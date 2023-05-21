@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
@@ -11,18 +11,22 @@ export const EditProfile = () => {
   }, []);
 
   return (
-    <Container className="d-flex flex-column align-items-center">
+    <Container className="button-container mt-5 d-flex flex-column align-items-center">
       <Link to={"/edit-profile/data"}>
-        <Button className="my-3">Change Profile Data</Button>
+        <Button className={cx(styles.button, "mb-3")}>
+          Change Profile Data
+        </Button>
       </Link>
       <Link to={"/edit-profile/password"}>
-        <Button className="mb-3">Change Password</Button>
+        <Button className={cx(styles.button, "mb-3")}>Change Password</Button>
       </Link>
       <Link to={"/edit-profile/picture"}>
-        <Button className="mb-3">Change Profile Picture</Button>
+        <Button className={cx(styles.button, "mb-3")}>
+          Change Profile Picture
+        </Button>
       </Link>
       <Link to={"/edit-profile/location"}>
-        <Button className="mb-3">Change Location</Button>
+        <Button className={cx(styles.button, "mb-3")}>Change Location</Button>
       </Link>
     </Container>
   );

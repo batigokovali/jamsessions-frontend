@@ -1,33 +1,19 @@
-.image {
-  width: 80%;
-  object-fit: contain;
-}
-
-.input {
-  width: 30%;
-  margin-top: 50px;
-  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.file {
-  width: 30%;
-  margin-top: 50px;
-  border: none;
-}
-
-.button {
-  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+.autocomplete {
+  width: 50%;
 }
 
 .map {
-  width: 500px;
+  width: 50%;
   height: 300px;
   border-radius: 15px;
   margin-top: 16px;
 }
 
-.multiselect {
-  width: 30%;
-  margin-top: 50px;
-  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+@media screen and (max-width: 768px) {
+  .map {
+    width: 100%;
+  }
+  .autocomplete {
+    width: 100%;
+  }
 }

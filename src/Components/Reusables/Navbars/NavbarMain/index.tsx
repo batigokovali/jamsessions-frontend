@@ -4,13 +4,15 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "@mui/joy/Button/Button";
 import styles from "./styles.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { IUser } from "../../../../Types/IUser";
 import cx from "classnames";
+import logo from "../../../assets/jamsessions-logo/png/logo-no-background.png";
 
 export const NavbarMain = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<IUser>();
 
   const fetchUserInfo = async () => {
@@ -29,42 +31,57 @@ export const NavbarMain = () => {
     }
   };
 
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   useEffect(() => {
     fetchUserInfo();
   }, []);
 
   return (
     <>
-      <Navbar expand="lg" id={styles.mainnavbar}>
-        <Container>
-          <div className="d-flex align-items-center me-5">
-            <Link to="/profile" className={cx("me-3")}>
-              <img src={user?.avatar} alt="" className={styles.image} />
+      <Navbar expand="lg" className="d-flex" id={styles.mainnavbar}>
+        <img src={logo} className={cx(styles.logo, "ms-2")} alt="" />
+        <Link to="/profile" className={cx(styles.imagelink, "me-3")}>
+          <img src={user?.avatar} className={cx(styles.image)} />
+        </Link>
+
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          className="ms-2"
+          id={styles.toggle}
+        />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto d-flex align-items-center">
+            <Link to="/home" className={cx(styles.navbarelements, "me-3")}>
+              Home
+            </Link>
+            <Link to="/map-view" className={cx(styles.navbarelements, "me-3")}>
+              Map View
+            </Link>
+            <Link
+              to="/my-sessions"
+              className={cx(styles.navbarelements, "me-3")}
+            >
+              My Sessions
             </Link>
             <Link to="/create-a-session">
-              <Button className={cx(styles.button, "me-3")}>
+              <Button size="sm" className={cx(styles.button, "me-3")}>
                 Create A Session
               </Button>
             </Link>
-          </div>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Link to="/home" className={cx(styles.navbarelements, "me-3")}>
-                Home
-              </Link>
-              <Link
-                to="/map-view"
-                className={cx(styles.navbarelements, "me-3")}
-              >
-                Map View
-              </Link>
-              <Link to="/my-sessions" className={cx(styles.navbarelements)}>
-                My Sessions
-              </Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
+            <Button
+              color="danger"
+              size="sm"
+              className={cx(styles.button, "me-3")}
+              onClick={logout}
+            >
+              Logout
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
       </Navbar>
     </>
   );

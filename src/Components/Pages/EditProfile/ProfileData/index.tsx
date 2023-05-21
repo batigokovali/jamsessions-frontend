@@ -9,16 +9,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const EditUserProfileData = () => {
-  //navigate
+  // navigate
   const navigate = useNavigate();
 
-  //User Data
+  // User Data
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<any[]>([]);
   let roleArray: any = [];
 
-  //Multiselect Options
+  // Multiselect Options
   const options = [
     { label: "Guitarist", value: "guitarist" },
     { label: "Singer", value: "singer" },
@@ -28,6 +28,9 @@ export const EditUserProfileData = () => {
     { label: "Keys", value: "keys" },
     { label: "Drummer", value: "drummer" },
   ];
+
+  const isFormValid =
+    username.trim() !== "" && email.trim() !== "" && role.length > 0;
 
   const handleSubmit = async () => {
     try {
@@ -55,8 +58,9 @@ export const EditUserProfileData = () => {
       console.log(error);
     }
   };
+
   return (
-    <Container>
+    <Container className="mt-3 d-flex justify-content-center align-items-center flex-column">
       <Input
         className={cx(styles.input)}
         variant="soft"
@@ -77,7 +81,11 @@ export const EditUserProfileData = () => {
           labelledBy="Role"
         />
       </div>
-      <Button className={cx(styles.button, "mt-4")} onClick={handleSubmit}>
+      <Button
+        className={cx(styles.button, "mt-4")}
+        onClick={handleSubmit}
+        disabled={!isFormValid}
+      >
         Save
       </Button>
     </Container>

@@ -1,0 +1,9 @@
+.input {
+  width: 35%;
+}
+
+@media screen and (max-width: 768px) {
+  .input {
+    width: 90%;
+  }
+}

@@ -9,17 +9,24 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const EditUserProfilePicture = () => {
-  //User profile picture file
+  // User profile picture file
   const [avatar, setAvatar] = useState<FormData | null>(null);
+  const [isFileSelected, setIsFileSelected] = useState(false);
 
   const handleFile = (e: any) => {
     const avatar = e.target.files[0];
     const avatarData = new FormData();
     avatarData.append("avatar", avatar);
     setAvatar(avatarData);
+    setIsFileSelected(true);
   };
 
   const saveProfilePicture = async () => {
+    if (!isFileSelected) {
+      // If no file is selected, do not proceed
+      return;
+    }
+
     const formData = new FormData();
     if (avatar) {
       const avatarFile = avatar.get("avatar");
@@ -42,10 +49,17 @@ export const EditUserProfilePicture = () => {
       console.log(error);
     }
   };
+
   return (
-    <Container>
+    <Container className="d-flex mt-5 flex-column align-items-center justify-content-center">
       <Input type="file" placeholder="Avatar" onChange={handleFile}></Input>
-      <Button onClick={saveProfilePicture}>Save</Button>
+      <Button
+        className="mt-3"
+        onClick={saveProfilePicture}
+        disabled={!isFileSelected}
+      >
+        Save
+      </Button>
     </Container>
   );
 };

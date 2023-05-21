@@ -1,5 +1,7 @@
 import { Container, Navbar } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { ISession } from "../../../Types/ISession";
 import styles from "./styles.module.css";
@@ -12,9 +14,12 @@ import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
 import { IUser } from "../../../Types/IUser";
 
 export const Home = () => {
+  const loc = useLocation();
   const [sessions, setSessions] = useState<ISession[]>();
   const [distance, setDistance] = useState<number>();
   const [user, setUser] = useState<IUser>();
+
+  console.log("params", loc);
 
   //Multiselect Options
   const options = [
@@ -84,6 +89,11 @@ export const Home = () => {
   };
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(loc.search);
+    const accessToken = searchParams.get("accessToken");
+    if (accessToken) {
+      localStorage.setItem("accessToken", accessToken);
+    }
     getSessions();
     getProfileInfo();
     document.title = "Jamsessions | Home";

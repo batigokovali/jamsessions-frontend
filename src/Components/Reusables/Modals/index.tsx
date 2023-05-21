@@ -25,6 +25,10 @@ export const MediaModal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
   return (
     <Modal show={isOpen} onHide={onClose}>
+      <Modal.Header className="bg-dark d-flex flex-column align-items-start">
+        <p className="text-white">{mediaItem?.title}</p>
+        <p className="text-white">{mediaItem?.description}</p>
+      </Modal.Header>
       <Modal.Body className="bg-dark rounded">
         <video
           controls

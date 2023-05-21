@@ -6,15 +6,23 @@ import styles from "./styles.module.css";
 import cx from "classnames";
 import { MediaModal } from "../Modals";
 import { AiFillPlayCircle } from "react-icons/ai";
+import { BsFillTrashFill } from "react-icons/bs";
+import { FiEdit } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface Props {
   feed: IFeeds[];
+  state: boolean;
+  fetch: Function;
 }
 
-export const MediaItem = ({ feed }: Props) => {
+export const MediaItem = ({ feed, state, fetch }: Props) => {
   const [playing, setPlaying] = useState(false);
   const [activeModal, setActiveModal] = useState<IFeeds | null>(null);
   const [imageErrors, setImageErrors] = useState<boolean[]>([]);
+
+  const navigate = useNavigate();
 
   const handlePlay = () => {
     setPlaying(true);
@@ -44,6 +52,22 @@ export const MediaItem = ({ feed }: Props) => {
     });
   };
 
+  const deleteFeed = async (feedID: string) => {
+    try {
+      await axios.delete(
+        (process.env.REACT_APP_API_URL as string) + `/feed/${feedID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      fetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container className="mt-3">
       <Row className="d-flex">
@@ -52,7 +76,6 @@ export const MediaItem = ({ feed }: Props) => {
             sm={12}
             md={6}
             lg={3}
-            onClick={() => handleOpenModal(feed)}
             className={cx(
               styles.feed,
               "mb-3 p-0 d-flex justify-content-center flex-column align-items-center"
@@ -65,6 +88,7 @@ export const MediaItem = ({ feed }: Props) => {
                   src={feed?.media?.replace("mp4", "jpg")}
                   className={cx(styles.thumbnail)}
                   onError={() => handleImageError(index)}
+                  onClick={() => handleOpenModal(feed)}
                   alt=""
                 />
               )}
@@ -72,14 +96,25 @@ export const MediaItem = ({ feed }: Props) => {
             </div>
             <Row className="d-flex px-3 mt-1 w-100 justify-content-start">
               <Col>
-                <p className="mb-0 text-white">{feed?.title}</p>
+                <p className="mb-0 text-white text-truncate">{feed?.title}</p>
               </Col>
             </Row>
             <Row className="d-flex px-3 mt-0 w-100 justify-content-start">
-              <p className="mb-0">
-                <span className={cx(styles.date)}>
-                  {format(new Date(feed?.createdAt), "do 'of' MMMM',' EEEE ")}
-                </span>
+              <p className={cx(styles.date, "mb-0 d-flex")}>
+                {format(new Date(feed?.createdAt), "do 'of' MMMM',' EEEE ")}
+                {state ? (
+                  <div className="ms-auto">
+                    <FiEdit
+                      onClick={() => navigate(`/edit-a-feed/${feed?._id}`)}
+                    />
+                    <BsFillTrashFill
+                      className="ms-2"
+                      onClick={() => deleteFeed(feed?._id)}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
               </p>
             </Row>
           </Col>

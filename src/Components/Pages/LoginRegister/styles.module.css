@@ -29,3 +29,12 @@
   border-radius: 15px;
   margin-top: 16px;
 }
+
+.google {
+  color: white;
+  text-decoration: none;
+}
+
+.google:hover {
+  color: grey;
+}

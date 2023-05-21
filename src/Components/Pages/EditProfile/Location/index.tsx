@@ -9,11 +9,13 @@ import { useEffect, useState, useRef } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
 import { ILocation } from "../../../../Types/ILocation";
+import { useNavigate } from "react-router-dom";
 
 export const EditUserLocation = () => {
-  const [location, setLocation] = useState<ILocation>();
-  const [latAuto, setLat] = useState();
-  const [lngAuto, setLng] = useState();
+  const [location, setLocation] = useState<ILocation | null>(null);
+  const [latAuto, setLat] = useState<number | undefined>(undefined);
+  const [lngAuto, setLng] = useState<number | undefined>(undefined);
+  const navigate = useNavigate();
 
   //Google Maps
   const { isLoaded } = useLoadScript({
@@ -53,6 +55,11 @@ export const EditUserLocation = () => {
   };
 
   const saveLocation = async () => {
+    if (!location) {
+      // If location is not selected, do not proceed
+      return;
+    }
+
     try {
       await axios.put(
         (process.env.REACT_APP_API_URL as string) + "/users/me",
@@ -64,6 +71,7 @@ export const EditUserLocation = () => {
           },
         }
       );
+      navigate("/profile");
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +83,7 @@ export const EditUserLocation = () => {
 
   return (
     <>
-      <Container>
+      <Container className="mt-3 d-flex flex-column justify-content-center align-items-center">
         {!isLoaded ? (
           <>
             <Box>
@@ -84,7 +92,7 @@ export const EditUserLocation = () => {
           </>
         ) : (
           <>
-            <div className={cx(styles.autocomplete, "mt-3")}>
+            <div className={cx(styles.autocomplete)}>
               <StandaloneSearchBox
                 onLoad={(ref) => (inputRef.current = ref)}
                 onPlacesChanged={handlePlaceChanged}
@@ -109,7 +117,11 @@ export const EditUserLocation = () => {
             </GoogleMap>
           </>
         )}
-        <Button className={cx(styles.button, "mt-4")} onClick={saveLocation}>
+        <Button
+          className={cx(styles.button, "mt-4")}
+          onClick={saveLocation}
+          disabled={!location} // Disable the button when location is not selected
+        >
           Save
         </Button>
       </Container>
