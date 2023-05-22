@@ -166,12 +166,12 @@ export const SessionsCard = ({
                   </Card.Body>
                   {state ? (
                     <Row className="my-3">
-                      <Col className="d-flex justify-content-center">
+                      <Col className="d-flex justify-content-center text-white">
                         <BsFillTrashFill
                           onClick={() => deleteSession(session._id)}
                         />
                       </Col>
-                      <Col className="d-flex justify-content-center">
+                      <Col className="d-flex justify-content-center text-white">
                         <FiEdit
                           onClick={() =>
                             navigate(`/edit-a-session/${session._id}`)
@@ -186,7 +186,10 @@ export const SessionsCard = ({
                     <>
                       {user?._id === session?.user._id ? (
                         <>
-                          <Button disabled className="mx-3">
+                          <Button
+                            disabled
+                            className={cx(styles.yourSession, "mx-3")}
+                          >
                             Your Session
                           </Button>
                         </>
@@ -197,7 +200,7 @@ export const SessionsCard = ({
                           ) ? (
                             <>
                               <Button
-                                className="mx-3"
+                                className={cx(styles.deleteSession, "mx-3")}
                                 color="danger"
                                 onClick={() => saveSession(session._id)}
                               >
@@ -207,7 +210,7 @@ export const SessionsCard = ({
                           ) : (
                             <>
                               <Button
-                                className="mx-3"
+                                className={cx(styles.saveSession, "mx-3")}
                                 onClick={() => saveSession(session._id)}
                               >
                                 Save Session

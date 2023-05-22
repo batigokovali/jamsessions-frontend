@@ -5,6 +5,9 @@ import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
 import { SessionsCard } from "../../Reusables/SessionsCard";
 import { NavbarSecond } from "../../Reusables/Navbars/NavbarSecond";
 import { IUser } from "../../../Types/IUser";
+import { Container } from "react-bootstrap";
+import styles from "./styles.module.css";
+import cx from "classnames";
 
 export const MySessions = () => {
   const [savedSessions, setSavedSessions] = useState<ISession[]>();
@@ -34,30 +37,46 @@ export const MySessions = () => {
     getProfileInfo();
   }, []);
 
-  console.log(createdSessions);
+  console.log(savedSessions);
   const distance = 0;
 
   return (
     <>
       <NavbarMain />
       <NavbarSecond name={"Saved Sessions" as string} />
-      <SessionsCard
-        sessions={savedSessions as ISession[]}
-        user={user as IUser}
-        state={false}
-        state2={true}
-        fetch={getProfileInfo}
-        distance={distance as number}
-      />
+      {savedSessions && savedSessions.length > 0 ? (
+        <SessionsCard
+          sessions={savedSessions as ISession[]}
+          user={user as IUser}
+          state={false}
+          state2={true}
+          fetch={getProfileInfo}
+          distance={distance as number}
+        />
+      ) : (
+        <Container className="my-5 d-flex justify-content-center align-items-center">
+          <p className={cx(styles.placeholder, "mb-0")}>
+            No saved sessions to display.
+          </p>
+        </Container>
+      )}
       <NavbarSecond name={"My Sessions" as string} />
-      <SessionsCard
-        sessions={createdSessions as ISession[]}
-        user={user as IUser}
-        state={true}
-        state2={false}
-        fetch={getProfileInfo}
-        distance={distance as number}
-      />
+      {createdSessions && createdSessions.length > 0 ? (
+        <SessionsCard
+          sessions={createdSessions as ISession[]}
+          user={user as IUser}
+          state={true}
+          state2={false}
+          fetch={getProfileInfo}
+          distance={distance as number}
+        />
+      ) : (
+        <Container className="my-5 d-flex justify-content-center align-items-center">
+          <p className={cx(styles.placeholder, "mb-0")}>
+            No created sessions to display.
+          </p>
+        </Container>
+      )}
     </>
   );
 };

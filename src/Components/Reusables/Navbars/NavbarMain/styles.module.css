@@ -47,3 +47,11 @@
     margin-bottom: 1vh;
   }
 }
+
+.logout {
+  background-color: rgb(141, 0, 0) !important;
+}
+
+.createASession {
+  background-color: rgb(71, 71, 71) !important;
+}

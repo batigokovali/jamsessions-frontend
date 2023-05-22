@@ -15,3 +15,15 @@
 .title:hover {
   color: black;
 }
+
+.yourSession {
+  background-color: rgb(71, 71, 71) !important;
+}
+
+.deleteSession {
+  background-color: rgb(141, 0, 0) !important;
+}
+
+.saveSession {
+  background-color: rgb(0, 0, 139);
+}

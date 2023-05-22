@@ -68,14 +68,17 @@ export const NavbarMain = () => {
               My Sessions
             </Link>
             <Link to="/create-a-session">
-              <Button size="sm" className={cx(styles.button, "me-3")}>
+              <Button
+                size="sm"
+                className={cx(styles.button, styles.createASession, "me-3")}
+              >
                 Create A Session
               </Button>
             </Link>
             <Button
               color="danger"
               size="sm"
-              className={cx(styles.button, "me-3")}
+              className={cx(styles.button, styles.logout, "me-3")}
               onClick={logout}
             >
               Logout
