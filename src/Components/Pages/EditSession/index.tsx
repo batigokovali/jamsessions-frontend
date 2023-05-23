@@ -4,10 +4,8 @@ import styles from "./styles.module.css";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
-import { toast } from "react-toastify";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
 import { MultiSelect } from "react-multi-select-component";
@@ -18,7 +16,6 @@ export const EditASession = () => {
   const navigate = useNavigate(); //Page Navigation
 
   const { sessionID } = useParams(); //Extracting session ID from URL
-  console.log(sessionID);
 
   //Geolocation
   const [currentLocation, setLocation] = useState<any>({});
@@ -81,8 +78,6 @@ export const EditASession = () => {
   let roleArray: any = [];
   let genreArray: any = [];
 
-  console.log(date);
-
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
@@ -117,8 +112,6 @@ export const EditASession = () => {
           },
         }
       );
-
-      toast("Editing session successful! 💪", { autoClose: 1000 });
       roleArray = [];
       genreArray = [];
       navigate("/my-sessions");
@@ -148,14 +141,10 @@ export const EditASession = () => {
     fetchSession();
   }, []);
 
-  console.log(sessionData);
-
   const center2 = {
     lat: currentLocation?.latitude,
     lng: currentLocation?.longitude,
   };
-
-  console.log(sessionData?.title);
 
   return (
     <>

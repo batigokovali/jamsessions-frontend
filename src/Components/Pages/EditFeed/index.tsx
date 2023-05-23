@@ -1,23 +1,17 @@
-import Box from "@mui/material/Box";
 import { Container } from "@mui/material";
 import styles from "./styles.module.css";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
-import { toast } from "react-toastify";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
-import { MultiSelect } from "react-multi-select-component";
 import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
-import { ISession } from "../../../Types/ISession";
 
 export const EditFeed = () => {
   const navigate = useNavigate(); //Page Navigation
 
   const { feedID } = useParams(); //Extracting session ID from URL
-  console.log(feedID);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

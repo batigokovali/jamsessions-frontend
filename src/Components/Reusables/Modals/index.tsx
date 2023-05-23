@@ -21,7 +21,6 @@ export const MediaModal: React.FC<ModalProps> = ({
   handlePlay,
   handlePause,
 }) => {
-  console.log("MediaModal rendered");
   if (!isOpen) return null;
   return (
     <Modal show={isOpen} onHide={onClose}>

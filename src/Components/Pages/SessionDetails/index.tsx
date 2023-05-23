@@ -49,8 +49,6 @@ export const SessionDetails = () => {
     getSessionDetails();
   }, []);
 
-  console.log(session);
-  console.log(location);
   return (
     <>
       {session ? (

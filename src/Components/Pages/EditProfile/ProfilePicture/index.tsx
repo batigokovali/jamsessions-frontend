@@ -1,12 +1,8 @@
 import { Container } from "react-bootstrap";
-import cx from "classnames";
 import Button from "@mui/joy/Button";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import Input from "@mui/joy/Input";
-import styles from "./styles.module.css";
-import { MultiSelect } from "react-multi-select-component";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export const EditUserProfilePicture = () => {
   // User profile picture file

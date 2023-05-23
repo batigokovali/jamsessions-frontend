@@ -13,7 +13,7 @@ import { MultiSelect } from "react-multi-select-component";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
-import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
+import { StandaloneSearchBox } from "@react-google-maps/api";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export const LoginRegister = ({ isLogin }: props) => {
@@ -95,8 +95,6 @@ export const LoginRegister = ({ isLogin }: props) => {
     }
   };
 
-  console.log(latAuto, lngAuto);
-
   const center = {
     lat: latAuto!,
     lng: lngAuto!,
@@ -116,7 +114,6 @@ export const LoginRegister = ({ isLogin }: props) => {
           location: { lat: latAuto, lng: lngAuto },
         }
       );
-      toast("Register successful! 💪", { autoClose: 1000 });
       localStorage.setItem("accessToken", data.accessToken);
       roleArray = [];
       navigate("/home");

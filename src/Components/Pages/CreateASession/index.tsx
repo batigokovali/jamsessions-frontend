@@ -1,13 +1,10 @@
-import Box from "@mui/material/Box";
 import { Container } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import cx from "classnames";
-import { toast } from "react-toastify";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import axios from "axios";
 import { MultiSelect } from "react-multi-select-component";
@@ -133,7 +130,6 @@ export const CreateASession = () => {
           },
         }
       );
-      toast("Creating session successful! 💪", { autoClose: 1000 });
       roleArray = [];
       genreArray = [];
       navigate("/home");
@@ -152,7 +148,6 @@ export const CreateASession = () => {
   };
 
   function handleDrag(this: any) {
-    console.log(this.getPosition().toJSON());
     setLat(this.getPosition().toJSON().lat);
     setLng(this.getPosition().toJSON().lng);
   }

@@ -30,7 +30,6 @@ export const EditUserLocation = () => {
 
   //Google maps marker drag
   function handleDrag(this: any) {
-    console.log(this.getPosition().toJSON());
     setLat(this.getPosition().toJSON().lat);
     setLng(this.getPosition().toJSON().lng);
     setLocation({ lat: latAuto!, lng: lngAuto! });

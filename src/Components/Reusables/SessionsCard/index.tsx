@@ -91,9 +91,6 @@ export const SessionsCard = ({
     return (degrees * Math.PI) / 180;
   }
 
-  console.log(user);
-  console.log(sessions);
-
   return (
     <>
       <Container className="mt-3">

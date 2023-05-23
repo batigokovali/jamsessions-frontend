@@ -11,8 +11,6 @@ import {
   useLoadScript,
   MarkerF,
   InfoWindowF,
-  Marker,
-  InfoWindow,
 } from "@react-google-maps/api";
 import axios from "axios";
 import { ILocation } from "../../../Types/ILocation";
@@ -51,7 +49,6 @@ export const MapView = () => {
           },
         }
       );
-      console.log(sessions.data.sessions);
       setSessions(sessions.data.sessions);
     } catch (error) {
       console.log(error);
@@ -99,8 +96,6 @@ export const MapView = () => {
   const handleInfoWindowClose = () => {
     setSelectedMarker(null);
   };
-
-  console.log(selectedMarker);
 
   return (
     <>

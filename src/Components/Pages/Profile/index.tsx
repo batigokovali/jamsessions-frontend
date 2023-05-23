@@ -1,7 +1,6 @@
-import styles from "./styles.module.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { IFeeds } from "../../../Types/IFeeds";
 import { IUser } from "../../../Types/IUser";
 import { NavbarMain } from "../../Reusables/Navbars/NavbarMain";
@@ -30,7 +29,6 @@ export const UserProfile = ({ state }: props) => {
           }
         );
         setUserData(data.user);
-        console.log("logged in user's profile");
       } else {
         const { data } = await axios.get(
           (process.env.REACT_APP_API_URL as string) + `/users/${userID}`,
@@ -41,7 +39,6 @@ export const UserProfile = ({ state }: props) => {
           }
         );
         setUserData(data);
-        console.log("another profile");
       }
     } catch (error) {
       console.log(error);
@@ -102,8 +99,6 @@ export const UserProfile = ({ state }: props) => {
       getUserAddress();
     }
   }, [userData]);
-  console.log(userData);
-  console.log(userAddress);
 
   return (
     <>

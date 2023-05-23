@@ -1,6 +1,5 @@
 import { Container, Navbar } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { ISession } from "../../../Types/ISession";
@@ -18,8 +17,6 @@ export const Home = () => {
   const [sessions, setSessions] = useState<ISession[]>();
   const [distance, setDistance] = useState<number>();
   const [user, setUser] = useState<IUser>();
-
-  console.log("params", loc);
 
   //Multiselect Options
   const options = [
@@ -52,8 +49,6 @@ export const Home = () => {
     try {
       roles.forEach((el) => roleArray.push(el.value));
       genres.forEach((el) => genreArray.push(el.value));
-      console.log(roleArray.toString());
-      console.log(genreArray.toString());
       const sessions = await axios.get(
         (process.env.REACT_APP_API_URL as string) +
           `/sessions?role=${roleArray.toString()}&genre=${genreArray.toString()}`,
@@ -63,7 +58,6 @@ export const Home = () => {
           },
         }
       );
-      console.log(sessions.data.sessions);
       setSessions(sessions.data.sessions);
       roleArray = [];
       genreArray = [];
