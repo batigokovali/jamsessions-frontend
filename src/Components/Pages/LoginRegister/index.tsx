@@ -21,7 +21,6 @@ export const LoginRegister = ({ isLogin }: props) => {
   const navigate = useNavigate();
 
   //Geolocation
-  const [currentLocation, setLocation] = useState<any>({});
   const [isData, setData] = useState(false);
   const [latAuto, setLat] = useState();
   const [lngAuto, setLng] = useState();
@@ -84,17 +83,6 @@ export const LoginRegister = ({ isLogin }: props) => {
   //Role array for POST, array of strings ["guitarist","singer"]
   let roleArray: any = [];
 
-  //For Getting the location
-  const getLocation = async () => {
-    try {
-      const location = await axios.get("https://ipapi.co/json");
-      setLocation(location.data);
-      setData(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const center = {
     lat: latAuto!,
     lng: lngAuto!,
@@ -151,7 +139,6 @@ export const LoginRegister = ({ isLogin }: props) => {
 
   useEffect(() => {
     document.title = "Jamsessions | Register";
-    getLocation();
   }, []);
 
   function handleDrag(this: any) {
