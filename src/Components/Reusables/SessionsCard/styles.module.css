@@ -27,3 +27,19 @@
 .saveSession {
   background-color: rgb(0, 0, 139);
 }
+
+.rolebadge {
+  background-color: rgb(0, 78, 78) !important;
+}
+
+.genrebadge {
+  background-color: rgb(0, 52, 100) !important;
+}
+
+.distancebadge {
+  background-color: rgb(64, 74, 83) !important;
+}
+
+.datebadge {
+  background-color: rgb(54, 1, 1) !important;
+}

@@ -138,13 +138,17 @@ export const SessionsCard = ({
                         </Link>
                       </Card.Text>
                       <Card.Text className="text-truncate mb-1">
-                        <Badge bg="primary">{session?.role}</Badge>{" "}
-                        <Badge bg="success">{session?.genre}</Badge>
+                        <Badge className={cx(styles.rolebadge)}>
+                          {session?.role}
+                        </Badge>{" "}
+                        <Badge className={cx(styles.genrebadge)}>
+                          {session?.genre}
+                        </Badge>
                       </Card.Text>
                       <Card.Text className="text-truncate mb-1"></Card.Text>
 
                       <Card.Text className="text-truncate mb-1">
-                        <Badge bg="info">
+                        <Badge className={cx(styles.distancebadge)}>
                           {calculateDistance(
                             user?.location?.lat as number,
                             user?.location?.lng as number,
@@ -155,7 +159,7 @@ export const SessionsCard = ({
                         </Badge>
                       </Card.Text>
                       <Card.Text>
-                        <Badge bg="secondary">
+                        <Badge className={cx(styles.datebadge)}>
                           {format(
                             new Date(session?.date),
                             "do 'of' MMMM',' EEEE "
