@@ -51,7 +51,7 @@ export const EditUserProfilePicture = () => {
   };
 
   return (
-    <Container className="d-flex mt-5 flex-column align-items-center justify-content-center">
+    <Container className="d-flex mt-3 flex-column align-items-center justify-content-center">
       <Input type="file" placeholder="Avatar" onChange={handleFile}></Input>
       <Button
         className="mt-3"

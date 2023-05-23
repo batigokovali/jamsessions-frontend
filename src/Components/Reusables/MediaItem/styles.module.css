@@ -27,3 +27,7 @@ body {
   object-fit: cover;
   border-radius: 10px;
 }
+
+.playButton {
+  height: 20vh;
+}

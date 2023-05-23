@@ -27,15 +27,15 @@
 
 @media screen and (max-width: 768px) {
   .input {
-    width: 80%;
+    width: 90%;
   }
   .multiselect {
-    width: 80%;
+    width: 90%;
   }
   .autocomplete {
-    width: 80%;
+    width: 90%;
   }
   .map {
-    width: 80%;
+    width: 90%;
   }
 }

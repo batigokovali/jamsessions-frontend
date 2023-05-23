@@ -93,7 +93,10 @@ export const MediaItem = ({ feed, state, fetch }: Props) => {
                 />
               )}
               {imageErrors[index] && (
-                <AiFillPlayCircle onClick={() => handleOpenModal(feed)} />
+                <AiFillPlayCircle
+                  className={cx(styles.playButton)}
+                  onClick={() => handleOpenModal(feed)}
+                />
               )}
             </div>
             <Row className="d-flex px-3 mt-1 w-100 justify-content-start">

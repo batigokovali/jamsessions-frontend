@@ -99,6 +99,20 @@ export const CreateASession = () => {
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
+
+      if (
+        !title ||
+        !description ||
+        !date ||
+        selected.length === 0 ||
+        selected2.length === 0 ||
+        !latAuto ||
+        !lngAuto
+      ) {
+        setError("Please fill in all required fields.");
+        return;
+      }
+
       selected.forEach((el) => roleArray.push(el.value));
       selected2.forEach((el) => genreArray.push(el.value));
       const sessionData = {
@@ -129,7 +143,7 @@ export const CreateASession = () => {
   };
 
   useEffect(() => {
-    document.title = "Jamsessions | Edit A Session";
+    document.title = "Jamsessions | Create A Session";
   }, []);
 
   const center = {
@@ -215,7 +229,19 @@ export const CreateASession = () => {
           </>
         )}
 
-        <Button className={cx(styles.button, "mt-4")} onClick={handleSubmit}>
+        <Button
+          disabled={
+            !title ||
+            !description ||
+            !date ||
+            selected.length === 0 ||
+            selected2.length === 0 ||
+            !latAuto ||
+            !lngAuto
+          }
+          className={cx(styles.button, "mt-4")}
+          onClick={handleSubmit}
+        >
           Create A Session
         </Button>
       </Container>

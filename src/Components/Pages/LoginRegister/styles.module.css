@@ -1,6 +1,6 @@
 .image {
-  width: 80%;
-  object-fit: contain;
+  height: 10vh;
+  object-fit: cover;
 }
 
 .input {
@@ -10,7 +10,7 @@
 }
 
 .autocomplete {
-  width: 50%;
+  width: 30%;
 }
 
 .multiselect {
@@ -25,7 +25,7 @@
 }
 
 .map {
-  width: 500px;
+  width: 90%;
   height: 300px;
   border-radius: 15px;
   margin-top: 16px;
@@ -38,4 +38,16 @@
 
 .google:hover {
   color: grey;
+}
+
+@media screen and (max-width: 992px) {
+  .input {
+    width: 90%;
+  }
+  .autocomplete {
+    width: 90%;
+  }
+  .multiselect {
+    width: 90%;
+  }
 }

@@ -70,7 +70,7 @@ export const CreateAPost = () => {
 
   return (
     <>
-      <Container className="d-flex flex-column justify-content-center align-items-center">
+      <Container className="d-flex flex-column justify-content-center align-items-center mt-3">
         <Input
           className={cx(styles.input)}
           variant="soft"
@@ -78,7 +78,7 @@ export const CreateAPost = () => {
           onChange={(val) => setTitle(val.currentTarget.value)}
         />
         <Input
-          className={cx(styles.input)}
+          className={cx(styles.input, "my-3")}
           variant="soft"
           placeholder="Description"
           onChange={(val) => setDescription(val.currentTarget.value)}
